@@ -1,10 +1,11 @@
 
 package com.example.techecommerceserver.service;
 
-import com.os.exception.AddressException;
-import com.os.exception.CustomerException;
-import com.os.exception.SessionLoginException;
-import com.os.model.Address;
+
+import com.example.techecommerceserver.exception.AddressException;
+import com.example.techecommerceserver.exception.CustomerException;
+import com.example.techecommerceserver.exception.SessionLoginException;
+import com.example.techecommerceserver.model.Address;
 
 import java.util.List;
 

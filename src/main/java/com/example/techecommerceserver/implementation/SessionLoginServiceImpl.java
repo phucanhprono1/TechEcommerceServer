@@ -1,9 +1,10 @@
 package com.example.techecommerceserver.implementation;
 
-import com.os.exception.SessionLoginException;
-import com.os.model.CurrentUserSession;
-import com.os.repository.CurrentUserSessionRepo;
-import com.os.service.SessionLoginService;
+
+import com.example.techecommerceserver.exception.SessionLoginException;
+import com.example.techecommerceserver.model.CurrentUserSession;
+import com.example.techecommerceserver.repository.CurrentUserSessionRepo;
+import com.example.techecommerceserver.service.SessionLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

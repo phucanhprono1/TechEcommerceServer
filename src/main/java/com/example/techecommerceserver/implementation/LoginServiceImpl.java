@@ -1,18 +1,18 @@
 package com.example.techecommerceserver.implementation;
 
-import com.os.exception.LoginException;
-import com.os.model.Admin;
-import com.os.model.CurrentUserSession;
-import com.os.model.Customer;
-import com.os.model.LoginDTO;
-import com.os.repository.AdminRepo;
-import com.os.repository.CurrentUserSessionRepo;
-import com.os.repository.CustomerRepo;
-import com.os.service.LoginService;
+
+import com.example.techecommerceserver.exception.LoginException;
+import com.example.techecommerceserver.model.Admin;
+import com.example.techecommerceserver.model.CurrentUserSession;
+import com.example.techecommerceserver.model.Customer;
+import com.example.techecommerceserver.model.LoginDTO;
+import com.example.techecommerceserver.repository.AdminRepo;
+import com.example.techecommerceserver.repository.CurrentUserSessionRepo;
+import com.example.techecommerceserver.repository.CustomerRepo;
+import com.example.techecommerceserver.service.LoginService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 
 @Service

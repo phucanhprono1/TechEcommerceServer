@@ -1,6 +1,6 @@
 package com.example.techecommerceserver.repository;
 
-import com.os.model.Address;
+import com.example.techecommerceserver.model.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

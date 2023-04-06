@@ -1,10 +1,10 @@
 package com.example.techecommerceserver.controller;
 
-import com.os.exception.CartException;
-import com.os.exception.CustomerException;
-import com.os.exception.ProductException;
-import com.os.model.Cart;
-import com.os.service.CartService;
+import com.example.techecommerceserver.exception.CartException;
+import com.example.techecommerceserver.exception.CustomerException;
+import com.example.techecommerceserver.exception.ProductException;
+import com.example.techecommerceserver.model.Cart;
+import com.example.techecommerceserver.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class CartController {
 
 	@PostMapping("/add")
 	public ResponseEntity<Cart> addProductToCart(@RequestParam("customerId") Integer cId,
-			@RequestParam("productId") Integer productId) throws CartException, CustomerException, ProductException {
+												 @RequestParam("productId") Integer productId) throws CartException, CustomerException, ProductException {
 		return new ResponseEntity<Cart>(cService.addProductToCart(cId, productId), HttpStatus.OK);
 
 	}

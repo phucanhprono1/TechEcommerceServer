@@ -1,10 +1,11 @@
 package com.example.techecommerceserver.controller;
 
-import com.os.exception.CartException;
-import com.os.exception.CustomerException;
-import com.os.exception.OrderException;
-import com.os.model.Orders;
-import com.os.service.OrderService;
+
+import com.example.techecommerceserver.exception.CartException;
+import com.example.techecommerceserver.exception.CustomerException;
+import com.example.techecommerceserver.exception.OrderException;
+import com.example.techecommerceserver.model.Orders;
+import com.example.techecommerceserver.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,8 +1,9 @@
 package com.example.techecommerceserver.controller;
 
-import com.os.exception.LoginException;
-import com.os.model.LoginDTO;
-import com.os.service.LoginService;
+
+import com.example.techecommerceserver.exception.LoginException;
+import com.example.techecommerceserver.model.LoginDTO;
+import com.example.techecommerceserver.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

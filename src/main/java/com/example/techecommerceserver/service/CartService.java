@@ -1,9 +1,10 @@
 package com.example.techecommerceserver.service;
 
-import com.os.exception.CartException;
-import com.os.exception.CustomerException;
-import com.os.exception.ProductException;
-import com.os.model.Cart;
+
+import com.example.techecommerceserver.exception.CartException;
+import com.example.techecommerceserver.exception.CustomerException;
+import com.example.techecommerceserver.exception.ProductException;
+import com.example.techecommerceserver.model.Cart;
 
 public interface CartService {
 

@@ -1,7 +1,7 @@
 package com.example.techecommerceserver.repository;
 
-import com.os.model.Customer;
-import com.os.model.Orders;
+import com.example.techecommerceserver.model.Customer;
+import com.example.techecommerceserver.model.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

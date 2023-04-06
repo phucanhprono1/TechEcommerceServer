@@ -1,7 +1,8 @@
 package com.example.techecommerceserver.controller;
 
-import com.os.exception.AdminException;
-import com.os.service.AdminService;
+
+import com.example.techecommerceserver.exception.AdminException;
+import com.example.techecommerceserver.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

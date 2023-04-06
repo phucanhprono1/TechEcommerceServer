@@ -1,6 +1,6 @@
 package com.example.techecommerceserver.repository;
 
-import com.os.model.CurrentUserSession;
+import com.example.techecommerceserver.model.CurrentUserSession;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

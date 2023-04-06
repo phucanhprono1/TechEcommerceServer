@@ -1,7 +1,9 @@
 package com.example.techecommerceserver.service;
 
-import com.os.exception.ProductException;
-import com.os.model.Product;
+
+
+import com.example.techecommerceserver.exception.ProductException;
+import com.example.techecommerceserver.model.Product;
 
 import java.util.List;
 

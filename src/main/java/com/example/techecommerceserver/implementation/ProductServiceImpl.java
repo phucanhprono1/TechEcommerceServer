@@ -1,11 +1,11 @@
 package com.example.techecommerceserver.implementation;
 
-import com.os.exception.ProductException;
-import com.os.model.Category;
-import com.os.model.Product;
-import com.os.repository.CategoryRepo;
-import com.os.repository.ProductRepo;
-import com.os.service.ProductService;
+import com.example.techecommerceserver.exception.ProductException;
+import com.example.techecommerceserver.model.Category;
+import com.example.techecommerceserver.model.Product;
+import com.example.techecommerceserver.repository.CategoryRepo;
+import com.example.techecommerceserver.repository.ProductRepo;
+import com.example.techecommerceserver.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

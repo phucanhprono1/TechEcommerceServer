@@ -1,14 +1,15 @@
 package com.example.techecommerceserver.implementation;
 
-import com.os.exception.AddressException;
-import com.os.exception.CustomerException;
-import com.os.exception.SessionLoginException;
-import com.os.model.Address;
-import com.os.model.Customer;
-import com.os.repository.AddressRepo;
-import com.os.repository.CustomerRepo;
-import com.os.service.AddressService;
-import com.os.service.SessionLoginService;
+
+import com.example.techecommerceserver.exception.AddressException;
+import com.example.techecommerceserver.exception.CustomerException;
+import com.example.techecommerceserver.exception.SessionLoginException;
+import com.example.techecommerceserver.model.Address;
+import com.example.techecommerceserver.model.Customer;
+import com.example.techecommerceserver.repository.AddressRepo;
+import com.example.techecommerceserver.repository.CustomerRepo;
+import com.example.techecommerceserver.service.AddressService;
+import com.example.techecommerceserver.service.SessionLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

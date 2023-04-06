@@ -1,9 +1,9 @@
 package com.example.techecommerceserver.implementation;
 
-import com.os.exception.AdminException;
-import com.os.model.Admin;
-import com.os.repository.AdminRepo;
-import com.os.service.AdminService;
+import com.example.techecommerceserver.exception.AdminException;
+import com.example.techecommerceserver.model.Admin;
+import com.example.techecommerceserver.repository.AdminRepo;
+import com.example.techecommerceserver.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

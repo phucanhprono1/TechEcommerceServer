@@ -1,6 +1,7 @@
 package com.example.techecommerceserver.service;
 
-import com.os.exception.SessionLoginException;
+
+import com.example.techecommerceserver.exception.SessionLoginException;
 
 public interface SessionLoginService {
 

@@ -2,7 +2,7 @@ package com.example.techecommerceserver.model;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Data
 @Embeddable

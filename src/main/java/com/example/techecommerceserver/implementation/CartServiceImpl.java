@@ -1,15 +1,16 @@
 package com.example.techecommerceserver.implementation;
 
-import com.os.exception.CartException;
-import com.os.exception.CustomerException;
-import com.os.exception.ProductException;
-import com.os.model.Cart;
-import com.os.model.Customer;
-import com.os.model.Product;
-import com.os.repository.CartRepo;
-import com.os.repository.CustomerRepo;
-import com.os.repository.ProductRepo;
-import com.os.service.CartService;
+
+import com.example.techecommerceserver.exception.CartException;
+import com.example.techecommerceserver.exception.CustomerException;
+import com.example.techecommerceserver.exception.ProductException;
+import com.example.techecommerceserver.model.Cart;
+import com.example.techecommerceserver.model.Customer;
+import com.example.techecommerceserver.model.Product;
+import com.example.techecommerceserver.repository.CartRepo;
+import com.example.techecommerceserver.repository.CustomerRepo;
+import com.example.techecommerceserver.repository.ProductRepo;
+import com.example.techecommerceserver.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

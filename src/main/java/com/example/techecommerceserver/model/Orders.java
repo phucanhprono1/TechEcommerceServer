@@ -3,7 +3,7 @@ package com.example.techecommerceserver.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,6 +16,9 @@ public class Orders {
 	private Integer orderId;
 	private LocalDateTime date;
 	private String orderStatus;
+
+	@Column(name="total_price")
+	private float total_price;
 
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)

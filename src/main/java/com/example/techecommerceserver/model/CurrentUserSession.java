@@ -16,14 +16,14 @@ public class CurrentUserSession {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer currSessionId;
 
-	@NotNull(message = "Email is require")
+	@NotNull(message = "Email is required")
 	@Email
 	private String email;
 
-	@NotNull(message = "Date time is require")
+	@NotNull(message = "Date time is required")
 	private LocalDateTime loginDateTime;
 
-	@NotNull(message = "Role is require")
+	@NotNull(message = "Role is required")
 	private String role;
 
 	private String privateKey;

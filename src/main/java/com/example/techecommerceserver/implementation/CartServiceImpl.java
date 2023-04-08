@@ -42,7 +42,7 @@ public class CartServiceImpl implements CartService {
 
 		Customer customer = opt.get();
 		Cart cart = customer.getCart();
-
+		float price = 0;
 		List<Product> itemList = cart.getProducts();
 		boolean flag = true;
 		for (int i = 0; i < itemList.size(); i++) {
@@ -50,7 +50,6 @@ public class CartServiceImpl implements CartService {
 			if (element.getProductId() == productId) {
 				if (cart.getProduct_quantity() == null) {
 					cart.setProduct_quantity(1);
-
 				} else {
 					cart.setProduct_quantity(cart.getProduct_quantity() + 1);
 				}

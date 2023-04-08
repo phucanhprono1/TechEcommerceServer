@@ -13,6 +13,7 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer cartId;
 	private Integer product_quantity;
+	private double total_price;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Product> products;

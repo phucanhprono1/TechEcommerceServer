@@ -48,11 +48,7 @@ public class OrderServiceImpl implements OrderService {
 			throw new CartException("add minimum one product to order!");
 		} else {
 			o.setProductList(new ArrayList<>(cart.getProducts()));
-			double k = 0;
-			for(Product m :cart.getProducts()){
-				k += m.getPrice();
-			}
-			o.setTotal_price(k);
+			o.setTotal_price(cart.getTotal_price());
 			return oRepo.save(o);
 		}
 	}
@@ -65,11 +61,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setCustomer(c);
 		Cart cart = c.getCart();
 		o.setProductList(new ArrayList<>(cart.getProducts()));
-		double k = 0;
-		for(Product m :cart.getProducts()){
-			k += m.getPrice();
-		}
-		o.setTotal_price(k);
+		o.setTotal_price(cart.getTotal_price());
 		OrderDTO a = new OrderDTO();
 		if (o != null) {
 			oRepo.save(order);

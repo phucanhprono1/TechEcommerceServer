@@ -15,10 +15,16 @@ public class Product {
 	private String productName;
 	private Double price;
 	private String color;
-	private String dimension;
-	private String specification;
-	private String menufacturer;
+	private String description;
+	private String image;
+	private String size;
+	private String manufacturer;
+	private int quantity;
+	private int numberSell;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "category_id")
 	private Category category;
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.techecommerceserver.controller;
 
+import com.example.techecommerceserver.dto.ProductDto;
 import com.example.techecommerceserver.exception.ProductException;
 import com.example.techecommerceserver.model.Product;
 import com.example.techecommerceserver.service.ProductService;
@@ -28,25 +29,25 @@ public class ProductController {
 		return new ResponseEntity<Product>(product, HttpStatus.OK);
 	}
 
-	@PutMapping("/update")
-	public ResponseEntity<Product> updateProduct(@RequestBody Product p) throws ProductException {
-		Product product = pService.updateProduct(p);
-		return new ResponseEntity<Product>(product, HttpStatus.OK);
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Product> updateProduct(@PathVariable Integer id,@RequestBody ProductDto p) throws ProductException {
+		pService.updateProduct(id,p);
+		return new ResponseEntity<Product>(HttpStatus.OK);
 	}
 
-	@GetMapping("/view/{productId}")
-	public ResponseEntity<Product> viewProductById(@PathVariable("productId") Integer productId) throws ProductException {
+	@GetMapping("/viewProduct/{productId}")
+	public ResponseEntity<Product> viewProductById(@PathVariable Integer productId) throws ProductException {
 		return new ResponseEntity<Product>(pService.viewProduct(productId), HttpStatus.OK);
 	}
 
 	@GetMapping("/view/{categoryId}")
-	public ResponseEntity<List<Product>> viewProductByCategoryId(@PathVariable("categoryId") Integer categoryId)
+	public ResponseEntity<List<Product>> viewProductByCategoryId(@PathVariable Integer categoryId)
 			throws ProductException {
 		return new ResponseEntity<List<Product>>(pService.viewProductByCategory(categoryId), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/remove/{productId}")
-	public ResponseEntity<Product> removeProductById(@PathVariable("productId") Integer productId)
+	public ResponseEntity<Product> removeProductById(@PathVariable Integer productId)
 			throws ProductException {
 		return new ResponseEntity<Product>(pService.removeProduct(productId), HttpStatus.OK);
 	}

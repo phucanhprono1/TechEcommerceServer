@@ -1,5 +1,6 @@
 package com.example.techecommerceserver.implementation;
 
+import com.example.techecommerceserver.dto.ProductDto;
 import com.example.techecommerceserver.exception.ProductException;
 import com.example.techecommerceserver.model.Category;
 import com.example.techecommerceserver.model.Product;
@@ -42,25 +43,31 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product updateProduct(Product product) throws ProductException {
-		Optional<Product> opt = pRepo.findById(product.getProductId());
-		if (opt.isPresent()) {
-			return pRepo.save(product);
-
-		} else {
-			throw new ProductException("Product not updated");
-		}
-
+	public Product updateProduct(Integer id, ProductDto productDto) throws ProductException {
+//		Optional<Product> opt = pRepo.findById(id);
+//		if (opt.isPresent()) {
+//			return pRepo.save(product);
+//
+//		} else {
+//			throw new ProductException("Product not updated");
+//		}
+		Product opt = pRepo.findById(id).orElseThrow(() -> new ProductException("For id " +id));
+		Product product1 = mapFromDtoToProduct(productDto, opt);
+		pRepo.save(product1);
+		return product1;
 	}
 
 	@Override
 	public Product viewProduct(Integer productId) throws ProductException {
-		Optional<Product> opt = pRepo.findById(productId);
-		if (opt.isPresent()) {
-			return opt.get();
-		} else {
-			throw new ProductException("Product not found with product id - " + productId);
-		}
+//		Optional<Product> opt = pRepo.findById(productId);
+//		if (opt.isPresent()) {
+//			return opt.get();
+//		} else {
+//			throw new ProductException("Product not found with product id - " + productId);
+//		}
+		Product opt = pRepo.findById(productId).orElseThrow(() -> new ProductException("For id " +productId));
+		return opt;
+
 	}
 
 	@Override
@@ -80,6 +87,20 @@ public class ProductServiceImpl implements ProductService {
 		pRepo.delete(p);
 		return p;
 
+	}
+
+	private Product mapFromDtoToProduct(ProductDto productDto, Product product) {
+		product.setProductName(productDto.getProductName());
+		product.setImage(productDto.getImage());
+		product.setColor(productDto.getColor());
+		product.setDescription(productDto.getDescription());
+		product.setManufacturer(productDto.getManufacturer());
+		product.setSize(productDto.getSize());
+		product.setPrice(productDto.getPrice());
+		product.setQuantity(productDto.getQuantity());
+		product.setNumberSell(productDto.getNumberSell());
+		product.setCategory(cRepo.getOne(productDto.getCategoryId()));
+		return product;
 	}
 
 }

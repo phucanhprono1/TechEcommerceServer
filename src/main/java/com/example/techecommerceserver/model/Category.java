@@ -11,12 +11,19 @@ import java.util.List;
 public class Category {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer catId;
+//	@GeneratedValue(strategy = GenerationType.)
+	private Integer categoryId;
 	private String categoryName;
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "category")
 	private List<Product> productList;
-	
+
+	public Category(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public Category() {
+	}
+
 }

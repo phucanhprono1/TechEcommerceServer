@@ -2,17 +2,19 @@ package com.example.techecommerceserver.implementation;
 
 
 import com.example.techecommerceserver.exception.LoginException;
-import com.example.techecommerceserver.model.Admin;
-import com.example.techecommerceserver.model.CurrentUserSession;
-import com.example.techecommerceserver.model.Customer;
-import com.example.techecommerceserver.model.LoginDTO;
+import com.example.techecommerceserver.model.*;
 import com.example.techecommerceserver.repository.AdminRepo;
 import com.example.techecommerceserver.repository.CurrentUserSessionRepo;
 import com.example.techecommerceserver.repository.CustomerRepo;
 import com.example.techecommerceserver.service.LoginService;
-import net.bytebuddy.utility.RandomString;
+
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import net.bytebuddy.utility.RandomString;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 
 @Service
@@ -49,7 +51,7 @@ public class LoginServiceImpl implements LoginService {
 				currentUserSession.setEmail(loginDTO.getEmail());
 				currentUserSession.setLoginDateTime(LocalDateTime.now());
 				currentUserSession.setRole("customer");
-				String privateKey = RandomString.make(6);
+				String privateKey = RandomString.make(10);
 				currentUserSession.setPrivateKey(privateKey);
 
 				sessionRepo.save(currentUserSession);
@@ -74,7 +76,7 @@ public class LoginServiceImpl implements LoginService {
 				currentUserSession.setEmail(loginDTO.getEmail());
 				currentUserSession.setLoginDateTime(LocalDateTime.now());
 				currentUserSession.setRole("admin");
-				String privateKey = RandomString.make(6);
+				String privateKey = RandomString.make(10);
 				currentUserSession.setPrivateKey(privateKey);
 
 				sessionRepo.save(currentUserSession);
@@ -122,5 +124,10 @@ public class LoginServiceImpl implements LoginService {
 
 		} else
 			throw new LoginException("Invalid role");
+	}
+
+	@Override
+	public String register(RegisterDTO registerDTO) throws LoginException {
+		return null;
 	}
 }

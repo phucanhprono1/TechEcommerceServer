@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CustomerRepo extends JpaRepository<Customer, Integer> {
@@ -14,5 +15,8 @@ public interface CustomerRepo extends JpaRepository<Customer, Integer> {
 	@Query("select c.orders from Customer c where c.cId=?1")
 	public List<Orders> getAllOrderByCid(Integer cId);
 
-	public Customer findByEmail(String email);
+	Customer findByEmail(String email);
+
+
+//	Optional<Customer> findbyEmail(String email);
 }

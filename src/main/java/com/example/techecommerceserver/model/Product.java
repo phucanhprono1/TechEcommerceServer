@@ -2,7 +2,7 @@ package com.example.techecommerceserver.model;
 
 import lombok.Data;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Data
 @Embeddable
@@ -18,6 +18,8 @@ public class Product {
 	private String dimension;
 	private String specification;
 	private String menufacturer;
+	private String link;
+
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Category category;

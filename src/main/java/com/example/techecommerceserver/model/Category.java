@@ -3,7 +3,7 @@ package com.example.techecommerceserver.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.util.List;
 
 @Data

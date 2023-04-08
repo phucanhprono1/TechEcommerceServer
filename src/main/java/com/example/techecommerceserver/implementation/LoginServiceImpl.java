@@ -34,19 +34,19 @@ public class LoginServiceImpl implements LoginService {
 			throw new LoginException("Please enter a valid role");
 
 		if (loginDTO.getRole().equalsIgnoreCase("customer")) {
-			Customer customer = customerRepo.findByEmail(loginDTO.getEmail());
+			Customer customer = customerRepo.findByEmail(loginDTO.getUsername());
 			if (customer == null)
 				throw new LoginException("Invalid email");
 
 			if (customer.getPassword().equals(loginDTO.getPassword())) {
 
-				CurrentUserSession cuurSession = sessionRepo.findByEmail(loginDTO.getEmail());
+				CurrentUserSession cuurSession = sessionRepo.findByEmail(loginDTO.getUsername());
 
 				if (cuurSession != null)
 					throw new LoginException("User already logged-In!");
 
 				CurrentUserSession currentUserSession = new CurrentUserSession();
-				currentUserSession.setEmail(loginDTO.getEmail());
+				currentUserSession.setUsername(loginDTO.getUsername());
 				currentUserSession.setLoginDateTime(LocalDateTime.now());
 				currentUserSession.setRole("customer");
 				String privateKey = RandomString.make(6);
@@ -59,19 +59,19 @@ public class LoginServiceImpl implements LoginService {
 			}
 
 		} else if (loginDTO.getRole().equalsIgnoreCase("admin")) {
-			Admin admin = adminRepo.findByEmail(loginDTO.getEmail());
+			Admin admin = adminRepo.findByEmail(loginDTO.getUsername());
 			if (admin == null)
 				throw new LoginException("Invalid email");
 
 			if (admin.getPassword().equals(loginDTO.getPassword())) {
 
-				CurrentUserSession cuurSession = sessionRepo.findByEmail(loginDTO.getEmail());
+				CurrentUserSession cuurSession = sessionRepo.findByUsername(loginDTO.getUsername());
 
 				if (cuurSession != null)
 					throw new LoginException("User already logged-In!");
 
 				CurrentUserSession currentUserSession = new CurrentUserSession();
-				currentUserSession.setEmail(loginDTO.getEmail());
+				currentUserSession.setUsername(loginDTO.getUsername());
 				currentUserSession.setLoginDateTime(LocalDateTime.now());
 				currentUserSession.setRole("admin");
 				String privateKey = RandomString.make(6);

@@ -10,5 +10,5 @@ public interface CurrentUserSessionRepo extends JpaRepository<CurrentUserSession
 	public CurrentUserSession findByEmail(String email);
 
 	public CurrentUserSession findByPrivateKey(String key);
-
+	public CurrentUserSession findByUsername(String Username);
 }

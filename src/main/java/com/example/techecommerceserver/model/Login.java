@@ -18,9 +18,9 @@ public class Login {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer userId;
 
-	@Email
-	@NotNull(message = "Email format is require")
-	private String email;
+
+	@NotNull(message = "username format is require")
+	private String username;
 
 	@NotNull(message = "Password is require")
 	@Size(min = 6, max = 16, message = "Password should between 6 to 16")

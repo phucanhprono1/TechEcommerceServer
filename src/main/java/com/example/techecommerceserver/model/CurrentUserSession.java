@@ -18,9 +18,9 @@ public class CurrentUserSession {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer currSessionId;
 
-	@NotNull(message = "Email is require")
-	@Email
-	private String email;
+	@NotNull(message = "username is require")
+
+	private String username;
 
 	@NotNull(message = "Date time is require")
 	private LocalDateTime loginDateTime;

@@ -2,7 +2,7 @@ package com.example.techecommerceserver.model;
 
 import lombok.Data;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.util.List;
 
 @Data
@@ -16,10 +16,7 @@ public class Cart {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Product> products;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	private Customer customer;
-	
-	
-	
 }

@@ -1,4 +1,8 @@
-package com.example.techecommerceserver.model;
+package com.example.techecommerceserver.dto;
+
+import com.example.techecommerceserver.model.Address;
+import com.example.techecommerceserver.model.Customer;
+import com.example.techecommerceserver.model.Product;
 
 import java.time.LocalDateTime;
 import java.util.List;

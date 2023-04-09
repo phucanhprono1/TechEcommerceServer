@@ -4,7 +4,7 @@ package com.example.techecommerceserver.service;
 import com.example.techecommerceserver.exception.CartException;
 import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.OrderException;
-import com.example.techecommerceserver.model.OrderDTO;
+import com.example.techecommerceserver.dto.OrderDTO;
 import com.example.techecommerceserver.model.Orders;
 
 import java.util.List;

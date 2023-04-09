@@ -5,7 +5,7 @@ import com.example.techecommerceserver.exception.LoginException;
 import com.example.techecommerceserver.model.Admin;
 import com.example.techecommerceserver.model.CurrentUserSession;
 import com.example.techecommerceserver.model.Customer;
-import com.example.techecommerceserver.model.LoginDTO;
+import com.example.techecommerceserver.dto.LoginDTO;
 import com.example.techecommerceserver.repository.AdminRepo;
 import com.example.techecommerceserver.repository.CurrentUserSessionRepo;
 import com.example.techecommerceserver.repository.CustomerRepo;
@@ -34,13 +34,13 @@ public class LoginServiceImpl implements LoginService {
 			throw new LoginException("Please enter a valid role");
 
 		if (loginDTO.getRole().equalsIgnoreCase("customer")) {
-			Customer customer = customerRepo.findByEmail(loginDTO.getUsername());
+			Customer customer = customerRepo.findByUsername(loginDTO.getUsername());
 			if (customer == null)
 				throw new LoginException("Invalid email");
 
 			if (customer.getPassword().equals(loginDTO.getPassword())) {
 
-				CurrentUserSession cuurSession = sessionRepo.findByEmail(loginDTO.getUsername());
+				CurrentUserSession cuurSession = sessionRepo.findByUsername(loginDTO.getUsername());
 
 				if (cuurSession != null)
 					throw new LoginException("User already logged-In!");
@@ -53,7 +53,7 @@ public class LoginServiceImpl implements LoginService {
 				currentUserSession.setPrivateKey(privateKey);
 
 				sessionRepo.save(currentUserSession);
-				return "Login Sucessufull!";
+				return "Login Successfully!";
 			} else {
 				throw new LoginException("Please Enter a valid password");
 			}
@@ -78,7 +78,7 @@ public class LoginServiceImpl implements LoginService {
 				currentUserSession.setPrivateKey(privateKey);
 
 				sessionRepo.save(currentUserSession);
-				return "Login Sucessufull!";
+				return "Login Successfully!";
 			} else {
 				throw new LoginException("Please Enter a valid password");
 			}

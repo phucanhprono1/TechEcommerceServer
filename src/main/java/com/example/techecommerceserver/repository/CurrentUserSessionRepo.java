@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CurrentUserSessionRepo extends JpaRepository<CurrentUserSession, Integer> {
 
-	public CurrentUserSession findByEmail(String email);
+//	public CurrentUserSession findByEmail(String email);
 
 	public CurrentUserSession findByPrivateKey(String key);
 	public CurrentUserSession findByUsername(String Username);

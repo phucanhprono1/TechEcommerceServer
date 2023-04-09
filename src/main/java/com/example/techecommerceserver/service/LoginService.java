@@ -2,7 +2,7 @@ package com.example.techecommerceserver.service;
 
 
 import com.example.techecommerceserver.exception.LoginException;
-import com.example.techecommerceserver.model.LoginDTO;
+import com.example.techecommerceserver.dto.LoginDTO;
 
 public interface LoginService {
 

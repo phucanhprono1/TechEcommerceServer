@@ -1,4 +1,4 @@
-package com.example.techecommerceserver.model;
+package com.example.techecommerceserver.dto;
 
 import lombok.Data;
 

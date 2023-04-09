@@ -6,6 +6,7 @@ import com.example.techecommerceserver.exception.LoginException;
 import com.example.techecommerceserver.model.Customer;
 import com.example.techecommerceserver.dto.LoginDTO;
 import com.example.techecommerceserver.repository.CustomerRepo;
+import com.example.techecommerceserver.response.LoginResponse;
 import com.example.techecommerceserver.service.CustomerService;
 import com.example.techecommerceserver.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,8 @@ public class LoginLogoutController {
 	private CustomerRepo customerRepo;
 
 	@PostMapping("/login")
-	public ResponseEntity<String> logIn(@RequestBody LoginDTO loginDTO) throws LoginException {
-		return new ResponseEntity<String>(loginService.loginAccount(loginDTO), HttpStatus.OK);
+	public ResponseEntity<LoginResponse> logIn(@RequestBody LoginDTO loginDTO) throws LoginException {
+		return new ResponseEntity<LoginResponse>(loginService.loginAccount(loginDTO), HttpStatus.OK);
 	}
 
 	@PostMapping("/logout")
@@ -40,7 +41,7 @@ public class LoginLogoutController {
 		if (cs == null) {
 
 			cService.addCustomer(c);
-			return new ResponseEntity<String>("Registered Successful",HttpStatus.ACCEPTED);
+			return new ResponseEntity<String>("Registered Successfully",HttpStatus.ACCEPTED);
 		}
 		else {
 			return new ResponseEntity<String>("username existed",HttpStatus.NOT_ACCEPTABLE);

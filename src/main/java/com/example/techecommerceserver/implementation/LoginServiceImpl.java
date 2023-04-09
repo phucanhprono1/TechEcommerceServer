@@ -9,6 +9,7 @@ import com.example.techecommerceserver.dto.LoginDTO;
 import com.example.techecommerceserver.repository.AdminRepo;
 import com.example.techecommerceserver.repository.CurrentUserSessionRepo;
 import com.example.techecommerceserver.repository.CustomerRepo;
+import com.example.techecommerceserver.response.LoginResponse;
 import com.example.techecommerceserver.service.LoginService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class LoginServiceImpl implements LoginService {
 	private CurrentUserSessionRepo sessionRepo;
 
 	@Override
-	public String loginAccount(LoginDTO loginDTO) throws LoginException {
+	public LoginResponse loginAccount(LoginDTO loginDTO) throws LoginException {
 
 		if (!loginDTO.getRole().equalsIgnoreCase("customer") && !loginDTO.getRole().equalsIgnoreCase("admin"))
 			throw new LoginException("Please enter a valid role");
@@ -53,7 +54,8 @@ public class LoginServiceImpl implements LoginService {
 				currentUserSession.setPrivateKey(privateKey);
 
 				sessionRepo.save(currentUserSession);
-				return "Login Successfully!";
+				LoginResponse lr = new LoginResponse("Login Successfully!","customer",privateKey);
+				return lr;
 			} else {
 				throw new LoginException("Please Enter a valid password");
 			}
@@ -76,9 +78,9 @@ public class LoginServiceImpl implements LoginService {
 				currentUserSession.setRole("admin");
 				String privateKey = RandomString.make(6);
 				currentUserSession.setPrivateKey(privateKey);
-
+				LoginResponse lr = new LoginResponse("Login Successfully!","customer",privateKey);
 				sessionRepo.save(currentUserSession);
-				return "Login Successfully!";
+				return lr;
 			} else {
 				throw new LoginException("Please Enter a valid password");
 			}

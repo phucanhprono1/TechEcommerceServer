@@ -15,7 +15,7 @@ public class OrderDTO {
 
     private Customer customer;
 
-    private List<Product> productList;
+    private List<CartItem> cartItems;
 
     private Address address;
 
@@ -23,6 +23,14 @@ public class OrderDTO {
 
     public OrderDTO() {
 
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 
     public Integer getOrderId() {
@@ -55,14 +63,6 @@ public class OrderDTO {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }
-
-    public List<Product> getProductList() {
-        return productList;
-    }
-
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
     }
 
     public Address getAddress() {

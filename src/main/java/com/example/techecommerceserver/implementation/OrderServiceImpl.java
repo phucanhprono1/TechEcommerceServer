@@ -30,7 +30,6 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Orders addOrder(Integer cid) throws OrderException, CustomerException, CartException {
-
 		Optional<Customer> opt = customerRepo.findById(cid);
 		if (opt.isEmpty()) {
 			throw new CustomerException("Customer not found");
@@ -44,10 +43,10 @@ public class OrderServiceImpl implements OrderService {
 		o.setOrderStatus("Pending");
 		o.setAddress(c.getAddress());
 		o.setCustomer(c);
-		if (cart.getProducts().isEmpty()) {
+		if (cart.getCartItems().isEmpty()) {
 			throw new CartException("add minimum one product to order!");
 		} else {
-			o.setProductList(new ArrayList<>(cart.getProducts()));
+			o.setCartItems(new ArrayList<>(cart.getCartItems()));
 			o.setTotal_price(cart.getTotal_price());
 			return oRepo.save(o);
 		}
@@ -89,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
 			a.setOrderId(o.get().getOrderId());
 			a.setOrderStatus(o.get().getOrderStatus());
 			a.setDate(o.get().getDate());
-			a.setProductList(o.get().getProductList());
+			a.setCartItems(o.get().getCartItems());
 			a.setCustomer(o.get().getCustomer());
 			a.setAddress(o.get().getAddress());
 			a.setPrice(o.get().getTotal_price());

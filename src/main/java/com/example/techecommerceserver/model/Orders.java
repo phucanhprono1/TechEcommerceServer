@@ -26,7 +26,7 @@ public class Orders {
 
 	@Embedded
 	@ElementCollection
-	private List<Product> productList;
+	private List<CartItem> cartItems;
 
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)

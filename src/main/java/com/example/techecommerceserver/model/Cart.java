@@ -16,7 +16,7 @@ public class Cart {
 	private double total_price;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Product> products;
+	private List<CartItem> cartItems;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Customer customer;

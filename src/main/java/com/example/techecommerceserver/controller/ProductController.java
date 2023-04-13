@@ -50,5 +50,4 @@ public class ProductController {
 			throws ProductException {
 		return new ResponseEntity<Product>(pService.removeProduct(productId), HttpStatus.OK);
 	}
-
 }

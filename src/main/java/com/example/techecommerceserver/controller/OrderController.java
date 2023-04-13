@@ -7,6 +7,7 @@ import com.example.techecommerceserver.exception.OrderException;
 import com.example.techecommerceserver.model.OrderDTO;
 import com.example.techecommerceserver.model.Orders;
 import com.example.techecommerceserver.service.OrderService;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +28,10 @@ public class OrderController {
 		return new ResponseEntity<Orders>(oService.addOrder(customerId), HttpStatus.CREATED);
 	}
 
-	@PutMapping("/update")
+	/*@PutMapping("/update")
 	public ResponseEntity<OrderDTO> updateOrder(@RequestBody Orders order) throws OrderException {
 		return new ResponseEntity<OrderDTO>(oService.updateOrder(order), HttpStatus.OK);
-	}
+	}*/
 
 	@GetMapping("/view/{id}")
 	public ResponseEntity<OrderDTO> viewOrderById(@PathVariable("id") Integer orderId) throws OrderException {

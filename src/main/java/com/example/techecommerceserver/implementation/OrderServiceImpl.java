@@ -55,6 +55,11 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public OrderDTO updateOrder(Orders order) throws OrderException {
+		return null;
+	}
+
+	/*@Override
+	public OrderDTO updateOrder(Orders order) throws OrderException {
 		Orders o = oRepo.findById(order.getOrderId()).orElseThrow(() -> new OrderException("Order not found"));
 		Optional<Customer> opt = customerRepo.findById(order.getOrderId());
 		Customer c = opt.get();
@@ -74,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
 			a.setPrice(order.getTotal_price());
 		}
 		return a;
-	}
+	}*/
 
 	@Override
 	public OrderDTO viewOrder(Integer orderId) throws OrderException {
@@ -105,6 +110,11 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	public List<Orders> viewAllOrdersByUserId(Integer userId) throws OrderException {
+		return null;
+	}
+
+	/*@Override
 	public List<Orders> viewAllOrdersByUserId(Integer uderId) throws OrderException {
 		List<Orders> orders = customerRepo.getAllOrderByCid(uderId);
 		if (orders.size() > 0) {
@@ -112,6 +122,6 @@ public class OrderServiceImpl implements OrderService {
 		} else {
 			throw new OrderException("Order not found");
 		}
-	}
+	}*/
 
 }

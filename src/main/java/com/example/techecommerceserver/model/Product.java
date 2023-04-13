@@ -20,6 +20,7 @@ public class Product {
 	private String menufacturer;
 	private String link;
 	private int quantity;
+	private int numberSell;
 
 
 	@ManyToOne(cascade = CascadeType.ALL)

@@ -41,21 +41,28 @@ public class CartServiceImpl implements CartService {
 		Customer customer = opt.get();
 		Cart cart = customer.getCart();
 		List<Product> itemList = cart.getProducts();
+		int k = 0;
 		boolean flag = true;
 		for (int i = 0; i < itemList.size(); i++) {
 			Product element = itemList.get(i);
 			if (element.getProductId() == productId) {
-				if (cart.getProduct_quantity() == null) {
+				int a = cart.getProducts().get(i).getNumberSell();
+				cart.getProducts().get(i).setNumberSell(a+1);
+				k = i;
+				cart.setTotal_price(cart.getTotal_price()+itemOpt.get().getPrice());
+				/*if (cart.getProduct_quantity() == null) {
 					cart.setProduct_quantity(1);
 					cart.setTotal_price(cart.getTotal_price()+element.getPrice());
 				} else {
 					cart.setProduct_quantity(cart.getProduct_quantity() + 1);
 					cart.setTotal_price(cart.getTotal_price()+element.getPrice());
-				}
+				}*/
 				flag = false;
 			}
 		}
 		if (flag) {
+			itemOpt.get().setNumberSell(1);
+			cart.setTotal_price(cart.getTotal_price()+itemOpt.get().getPrice());
 			cart.getProducts().add(itemOpt.get());
 		}
 		cRepo.save(cart);
@@ -75,11 +82,13 @@ public class CartServiceImpl implements CartService {
 			throw new ProductException("Product not found!");
 		Customer customer = opt.get();
 		Cart cart = customer.getCart();
+		int k = 0;
 		List<Product> itemList = cart.getProducts();
 		boolean flag = false;
 		for (int i = 0; i < itemList.size(); i++) {
 			Product element = itemList.get(i);
 			if (element.getProductId() == productId) {
+				k = i;
 				itemList.remove(element);
 				flag = true;
 				break;
@@ -88,6 +97,7 @@ public class CartServiceImpl implements CartService {
 		if (!flag) {
 			throw new CartException("Product not removed from cart");
 		}
+		cart.setTotal_price(cart.getTotal_price()-itemOpt.get().getPrice());
 		cart.setProducts(itemList);
 		cRepo.save(cart);
 		return cart;
@@ -95,6 +105,11 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
+	public Cart removeAllProduct(Integer customerId) throws CartException, CustomerException {
+		return null;
+	}
+
+/*	@Override
 	public Cart removeAllProduct(Integer customerId) throws CartException, CustomerException {
 		Optional<Customer> opt = crRepo.findById(customerId);
 		if (opt.isEmpty())
@@ -106,7 +121,8 @@ public class CartServiceImpl implements CartService {
 		c.getProducts().clear();
 		return cRepo.save(c);
 
-	}
+	}*/
+
 
 	@Override
 	public Cart increaseProductQuantity(Integer customerId, Integer productId)
@@ -121,22 +137,26 @@ public class CartServiceImpl implements CartService {
 
 		Customer customer = opt.get();
 		Cart cart = customer.getCart();
+		int k = 0;
 		List<Product> itemList = cart.getProducts();
 		boolean flag = true;
 		for (int i = 0; i < itemList.size(); i++) {
 			Product element = itemList.get(i);
 			if (element.getProductId() == productId) {
-				cart.setProduct_quantity(cart.getProduct_quantity() + 1);
+				int a = cart.getProducts().get(i).getNumberSell();
+				cart.getProducts().get(i).setNumberSell(a+1);
+				k = i;
+				cart.setTotal_price(cart.getTotal_price()+itemOpt.get().getPrice());
 				flag = false;
 			}
 		}
 		if (flag) {
+			itemOpt.get().setNumberSell(1);
+			cart.setTotal_price(cart.getTotal_price()+itemOpt.get().getPrice());
 			cart.getProducts().add(itemOpt.get());
 		}
-
 		cRepo.save(cart);
 		return cart;
-
 	}
 
 	@Override
@@ -154,20 +174,20 @@ public class CartServiceImpl implements CartService {
 		Cart cart = customer.getCart();
 		List<Product> itemList = cart.getProducts();
 		boolean flag = true;
-		if (itemList.size() > 0) {
-			for (int i = 0; i < itemList.size(); i++) {
-				Product element = itemList.get(i);
-				if (element.getProductId() == productId) {
-					cart.setProduct_quantity(cart.getProduct_quantity() + 1);
-					flag = false;
-				}
+		for (int i = 0; i < itemList.size(); i++) {
+			Product element = itemList.get(i);
+			if (element.getProductId() == productId) {
+				int a = cart.getProducts().get(i).getNumberSell();
+				cart.getProducts().get(i).setNumberSell(a-1);
+				cart.setTotal_price(cart.getTotal_price()-itemOpt.get().getPrice());
+				flag = false;
 			}
 		}
-
-		if (flag) {
+		/*if (flag) {
+			itemOpt.get().setNumberSell(1);
+			cart.setTotal_price(cart.getTotal_price()+itemOpt.get().getPrice());
 			cart.getProducts().add(itemOpt.get());
-		}
-
+		}*/
 		cRepo.save(cart);
 		return cart;
 	}

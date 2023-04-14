@@ -1,12 +1,16 @@
 package com.example.techecommerceserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Customer {
 
@@ -28,8 +32,18 @@ public class Customer {
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	private Cart cart;
-	
+
+	public Customer(String name, String username, String phone_number, String email, String password) {
+		this.name = name;
+		this.username = username;
+		this.phone_number = phone_number;
+		this.email = email;
+		this.password = password;
+	}
+
+
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")
 	private List<Orders> orders;
+
 }

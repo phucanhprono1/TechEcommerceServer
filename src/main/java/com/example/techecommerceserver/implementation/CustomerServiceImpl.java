@@ -66,4 +66,9 @@ public class CustomerServiceImpl implements CustomerService {
 			throw new CustomerException("customer not found");
 		}
 	}
+
+	@Override
+	public Customer findCustomerByUsername(String customerUsername) throws CustomerException {
+		return null;
+	}
 }

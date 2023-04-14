@@ -1,6 +1,7 @@
 package com.example.techecommerceserver.implementation;
 
 
+import com.example.techecommerceserver.dto.LoginFacebookDTO;
 import com.example.techecommerceserver.exception.LoginException;
 import com.example.techecommerceserver.model.Admin;
 import com.example.techecommerceserver.model.CurrentUserSession;
@@ -50,11 +51,11 @@ public class LoginServiceImpl implements LoginService {
 				currentUserSession.setUsername(loginDTO.getUsername());
 				currentUserSession.setLoginDateTime(LocalDateTime.now());
 				currentUserSession.setRole("customer");
-				String privateKey = RandomString.make(6);
+				String privateKey = RandomString.make(10);
 				currentUserSession.setPrivateKey(privateKey);
 
 				sessionRepo.save(currentUserSession);
-				LoginResponse lr = new LoginResponse("Login Successfully!","customer",privateKey);
+				LoginResponse lr = new LoginResponse("Login Successfully!",loginDTO.getUsername(),"customer",privateKey);
 				return lr;
 			} else {
 				throw new LoginException("Please Enter a valid password");
@@ -76,15 +77,53 @@ public class LoginServiceImpl implements LoginService {
 				currentUserSession.setUsername(loginDTO.getUsername());
 				currentUserSession.setLoginDateTime(LocalDateTime.now());
 				currentUserSession.setRole("admin");
-				String privateKey = RandomString.make(6);
+				String privateKey = RandomString.make(10);
 				currentUserSession.setPrivateKey(privateKey);
-				LoginResponse lr = new LoginResponse("Login Successfully!","customer",privateKey);
+				LoginResponse lr = new LoginResponse("Login Successfully!",loginDTO.getUsername(),"admin",privateKey);
 				sessionRepo.save(currentUserSession);
 				return lr;
 			} else {
 				throw new LoginException("Please Enter a valid password");
 			}
 		}
+		return null;
+	}
+
+	@Override
+	public LoginResponse loginFacebook(LoginFacebookDTO loginDTO) throws LoginException {
+		if (!loginDTO.getRole().equalsIgnoreCase("customer") && !loginDTO.getRole().equalsIgnoreCase("admin"))
+			throw new LoginException("Please enter a valid role");
+
+
+
+		if (loginDTO.getRole().equalsIgnoreCase("customer")) {
+			Customer rq = new Customer(loginDTO.getName(),loginDTO.getUsername(),loginDTO.getPhone_number(),loginDTO.getEmail(),loginDTO.getPassword());
+			Customer customer = customerRepo.findByUsername(loginDTO.getUsername());
+			if (customer == null)customerRepo.save(rq);
+			else{
+				if (customer.getPassword().equals(loginDTO.getPassword())) {
+
+					CurrentUserSession cuurSession = sessionRepo.findByUsername(loginDTO.getUsername());
+
+					if (cuurSession != null)
+						throw new LoginException("User already logged-In!");
+
+					CurrentUserSession currentUserSession = new CurrentUserSession();
+					currentUserSession.setUsername(loginDTO.getUsername());
+					currentUserSession.setLoginDateTime(LocalDateTime.now());
+					currentUserSession.setRole("customer");
+					String privateKey = RandomString.make(10);
+					currentUserSession.setPrivateKey(privateKey);
+
+					sessionRepo.save(currentUserSession);
+					LoginResponse lr = new LoginResponse("Login Successfully!",loginDTO.getUsername(),"customer",privateKey);
+					return lr;
+				} else {
+					throw new LoginException("Please Enter a valid password");
+				}
+			}
+		}
+
 		return null;
 	}
 

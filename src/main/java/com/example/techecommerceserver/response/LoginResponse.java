@@ -7,6 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class LoginResponse {
     String response;
+
+    String username;
     String role;
     String key;
 }

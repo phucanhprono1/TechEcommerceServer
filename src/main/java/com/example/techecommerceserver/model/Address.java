@@ -19,5 +19,4 @@ public class Address {
 	private String buildingName;
 	private String city;
 	private String pincode;
-
 }

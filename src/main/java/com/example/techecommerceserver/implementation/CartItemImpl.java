@@ -1,7 +1,9 @@
 package com.example.techecommerceserver.implementation;
 
+import com.example.techecommerceserver.model.Cart;
 import com.example.techecommerceserver.model.CartItem;
 import com.example.techecommerceserver.repository.CartItemRepo;
+import com.example.techecommerceserver.repository.CartRepo;
 import com.example.techecommerceserver.service.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class CartItemImpl implements CartItemService {
 
     @Autowired
     private CartItemRepo cartItemRepo;
+
+    @Autowired
+    private CartRepo cartRepo;
 
     @Override
     public ArrayList<CartItem> getAll() {

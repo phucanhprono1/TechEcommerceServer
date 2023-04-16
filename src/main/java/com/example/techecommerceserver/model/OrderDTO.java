@@ -17,20 +17,14 @@ public class OrderDTO {
 
     private List<CartItem> cartItems;
 
-    private Address address;
+    private String address;
+
+    private String payment_method;
 
     private double price;
 
     public OrderDTO() {
 
-    }
-
-    public List<CartItem> getCartItems() {
-        return cartItems;
-    }
-
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
     }
 
     public Integer getOrderId() {
@@ -65,12 +59,28 @@ public class OrderDTO {
         this.customer = customer;
     }
 
-    public Address getAddress() {
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
+
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPayment_method() {
+        return payment_method;
+    }
+
+    public void setPayment_method(String payment_method) {
+        this.payment_method = payment_method;
     }
 
     public double getPrice() {

@@ -98,9 +98,13 @@ public class CartServiceImpl implements CartService {
 			CartItem element = itemList.get(i);
 			if (element.getProduct().getProductId() == productId) {
 				k = i;
+				int num = element.getNumberSell();
+				cart.setTotal_price(cart.getTotal_price()-itemOpt.get().getPrice()*num);
 				itemList.remove(element);
-				CartItem m = cartItemRepo.findById(itemList.get(i).getId()).get();
-				for(CartItem b: itemList){
+				cart.setCartItems(itemList);
+				cRepo.save(cart);
+				List<CartItem> m = cartItemRepo.findAll();
+				for(CartItem b: m){
 					if(b.getProduct().getProductId() == productId){
 						cartItemRepo.deleteById(b.getId());
 					}
@@ -112,11 +116,7 @@ public class CartServiceImpl implements CartService {
 		if (!flag) {
 			throw new CartException("Product not removed from cart");
 		}
-		cart.setTotal_price(cart.getTotal_price()-itemOpt.get().getPrice());
-		cart.setCartItems(itemList);
-		cRepo.save(cart);
-		return cart;
-
+		return cRepo.save(cart);
 	}
 
 	@Override
@@ -133,9 +133,14 @@ public class CartServiceImpl implements CartService {
 		if (c == null) {
 			throw new CartException("cart not found");
 		}
-		c.getProducts().clear();
+		c.getCartItems().clear();
+		List<CartItem> list = cartItemRepo.findAll();
+		for(CartItem m: list){
+			if(m.getCustomer().getCId() == customerId){
+				cartItemRepo.deleteById(m.getId());
+			}
+		}
 		return cRepo.save(c);
-
 	}*/
 
 	@Override
@@ -214,9 +219,9 @@ public class CartServiceImpl implements CartService {
 				CartItem p = cartItemRepo.findById(cart.getCartItems().get(i).getId()).get();
 				if(a-1 > 0){
 					cartItemRepo.save(p);
-				}else cartItemRepo.deleteById(p.getId());
-				k = i;
-				cart.setTotal_price(cart.getTotal_price()-itemOpt.get().getPrice());
+					k = i;
+					cart.setTotal_price(cart.getTotal_price()-itemOpt.get().getPrice());
+				}
 				flag = false;
 			}
 		}

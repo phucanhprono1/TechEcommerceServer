@@ -26,9 +26,9 @@ public class Orders {
 
 	@Embedded
 	@ElementCollection
-	private List<CartItem> cartItems;
+	private List<OrderDetail> orderDetails;
 
-	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
-	private Address address;
+	private String address;
+
+	private String payment_method;
 }

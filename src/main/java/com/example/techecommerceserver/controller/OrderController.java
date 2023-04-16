@@ -23,19 +23,23 @@ public class OrderController {
 	private OrderService oService;
 
 	@PostMapping("/add")
-	public ResponseEntity<Orders> addOrder(@RequestParam("customerId") Integer customerId)
+	public ResponseEntity<Orders> addOrder(@RequestParam("customerId") Integer customerId,
+										   @RequestParam("address") String address,
+										   @RequestParam("payment_method") String payment_method)
 			throws OrderException, CustomerException, CartException {
-		return new ResponseEntity<Orders>(oService.addOrder(customerId), HttpStatus.CREATED);
+		return new ResponseEntity<Orders>(oService.addOrder(customerId, address, payment_method), HttpStatus.CREATED);
 	}
 
-	/*@PutMapping("/update")
-	public ResponseEntity<OrderDTO> updateOrder(@RequestBody Orders order) throws OrderException {
-		return new ResponseEntity<OrderDTO>(oService.updateOrder(order), HttpStatus.OK);
-	}*/
+	@PutMapping("/update")
+	public ResponseEntity<Orders> updateOrder(@RequestParam("id") int id,
+												@RequestParam("address") String address,
+												@RequestParam("payment_method") String payment_method) throws OrderException {
+		return new ResponseEntity<Orders>(oService.updateOrder(id, address, payment_method), HttpStatus.OK);
+	}
 
 	@GetMapping("/view/{id}")
-	public ResponseEntity<OrderDTO> viewOrderById(@PathVariable("id") Integer orderId) throws OrderException {
-		return new ResponseEntity<OrderDTO>(oService.viewOrder(orderId), HttpStatus.OK);
+	public ResponseEntity<Orders> viewOrderById(@PathVariable("id") Integer orderId) throws OrderException {
+		return new ResponseEntity<Orders>(oService.viewOrder(orderId), HttpStatus.OK);
 	}
 
 	@GetMapping("/view")
@@ -43,9 +47,9 @@ public class OrderController {
 		return new ResponseEntity<List<Orders>>(oService.viewAllOrder(), HttpStatus.OK);
 	}
 
-	/*@GetMapping("/view/{userId}")
+	@GetMapping("/view-us/{userId}")
 	public ResponseEntity<List<Orders>> viewOrderByUserId(@PathVariable("userId") Integer userId)
 			throws OrderException {
 		return new ResponseEntity<List<Orders>>(oService.viewAllOrdersByUserId(userId), HttpStatus.OK);
-	}*/
+	}
 }

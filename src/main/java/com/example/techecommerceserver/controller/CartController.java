@@ -24,16 +24,17 @@ public class CartController {
 
 	}
 
-	@DeleteMapping("/remove/{cartId}/{productId}")
-	public ResponseEntity<Cart> removeProductFromCart(@PathVariable("customerId") Integer customerId,
-			@PathVariable("productId") Integer productId) throws CartException, CustomerException, ProductException {
+	/*@DeleteMapping("/remove")
+	public ResponseEntity<Cart> removeProductFromCart(@RequestParam("customerId") Integer customerId,
+			@RequestParam("productId") Integer productId) throws CartException, CustomerException, ProductException {
 		return new ResponseEntity<Cart>(cService.removeProductFromCart(customerId, productId), HttpStatus.OK);
-	}
+	}*/
 
-	/*@DeleteMapping("/remove/{cartId}")
-	public ResponseEntity<Cart> removeAllProduct(@PathVariable("cartId") Integer cartId)
+	/*
+	@DeleteMapping("/removeAll")
+	public ResponseEntity<Cart> removeAllProduct(@RequestParam ("customerId") Integer customerId)
 			throws CartException, CustomerException {
-		return new ResponseEntity<Cart>(cService.removeAllProduct(cartId), HttpStatus.OK);
+		return new ResponseEntity<Cart>(cService.removeAllProduct(customerId), HttpStatus.OK);
 	}*/
 
 	@PutMapping("/increase")

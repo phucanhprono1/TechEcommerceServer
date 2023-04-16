@@ -6,16 +6,17 @@ import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.OrderException;
 import com.example.techecommerceserver.model.OrderDTO;
 import com.example.techecommerceserver.model.Orders;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 public interface OrderService {
 
-	public Orders addOrder(Integer cid) throws OrderException, CustomerException, CartException;
+	public Orders addOrder(Integer cid, String address, String payment_method) throws OrderException, CustomerException, CartException;
 
-	public OrderDTO updateOrder(Orders order) throws OrderException;
+	public Orders updateOrder(int id, String address, String payment_method) throws OrderException;
 
-	public OrderDTO viewOrder(Integer orderId) throws OrderException;
+	public Orders viewOrder(Integer orderId) throws OrderException;
 
 	public List<Orders> viewAllOrder() throws OrderException;
 

@@ -33,7 +33,7 @@ public class SessionLoginServiceImpl implements SessionLoginService {
 			throw new SessionLoginException("User login required");
 		else {
 			Customer cs = customerRepo.findByUsername(currSess.getUsername());
-			return new CurrentCustomerDTO(cs.getName(),cs.getUsername(),cs.getPhone_number(), cs.getEmail());
+			return new CurrentCustomerDTO(cs.getCId(),cs.getName(),cs.getUsername(),cs.getPhone_number(), cs.getEmail());
 		}
 	}
 

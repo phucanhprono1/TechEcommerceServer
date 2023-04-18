@@ -14,11 +14,13 @@ public class Orders {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer orderId;
+
 	private LocalDateTime date;
 	private String orderStatus;
 
 	@Column(name="total_price")
 	private float total_price;
+
 
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)

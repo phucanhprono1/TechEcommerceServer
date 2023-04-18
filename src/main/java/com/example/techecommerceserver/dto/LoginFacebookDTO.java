@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class LoginFacebookDTO {
     public String name;
-
-    public String username;
+    public String email;
     public String phone_number;
+    public String username;
     public String password;
 
-    public String email;
+
     public String role;
 }

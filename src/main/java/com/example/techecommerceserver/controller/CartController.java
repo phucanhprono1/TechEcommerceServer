@@ -19,8 +19,8 @@ public class CartController {
 
 	@PostMapping("/add")
 	public ResponseEntity<Cart> addProductToCart(@RequestParam("customerId") Integer cId,
-												 @RequestParam("productId") Integer productId) throws CartException, CustomerException, ProductException {
-		return new ResponseEntity<Cart>(cService.addProductToCart(cId, productId), HttpStatus.OK);
+												 @RequestParam("productId") Integer productId,@RequestParam("quantity")int quantity) throws CartException, CustomerException, ProductException {
+		return new ResponseEntity<Cart>(cService.addProductToCart(cId, productId,quantity), HttpStatus.OK);
 
 	}
 

@@ -3,6 +3,7 @@ package com.example.techecommerceserver.controller;
 
 import com.example.techecommerceserver.dto.CurrentCustomerDTO;
 import com.example.techecommerceserver.dto.LoginFacebookDTO;
+import com.example.techecommerceserver.dto.RegisterDTO;
 import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.LoginException;
 import com.example.techecommerceserver.exception.SessionLoginException;
@@ -43,11 +44,11 @@ public class LoginLogoutController {
 		return new ResponseEntity<String>(loginService.logoutAccount(role, key), HttpStatus.OK);
 	}
 	@PostMapping("/register")
-	public ResponseEntity<String> register(@RequestBody Customer c) throws CustomerException {
+	public ResponseEntity<String> register(@RequestBody RegisterDTO c) throws CustomerException {
 		Customer cs = customerRepo.findByUsername(c.getUsername());
 		if (cs == null) {
-
-			cService.addCustomer(c);
+			Customer reg = new Customer(c.getName(), c.getUsername(), c.getPhone_number(), c.getEmail(), c.getPassword());
+			cService.addCustomer(reg);
 			return new ResponseEntity<String>("Registered Successfully",HttpStatus.ACCEPTED);
 		}
 		else {

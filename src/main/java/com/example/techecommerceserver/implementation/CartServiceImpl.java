@@ -30,7 +30,7 @@ public class CartServiceImpl implements CartService {
 	private ProductRepo pRepo;
 
 	@Override
-	public Cart addProductToCart(Integer customerId, Integer productId)
+	public Cart addProductToCart(Integer customerId, Integer productId,int quantity)
 			throws CartException, CustomerException, ProductException {
 		Optional<Customer> opt = crRepo.findById(customerId);
 		if (opt.isEmpty())
@@ -49,15 +49,16 @@ public class CartServiceImpl implements CartService {
 			Product element = itemList.get(i);
 			if (element.getProductId() == productId) {
 				if (cart.getProduct_quantity() == null) {
-					cart.setProduct_quantity(1);
+					cart.setProduct_quantity(quantity);
 				} else {
-					cart.setProduct_quantity(cart.getProduct_quantity() + 1);
+					cart.setProduct_quantity(cart.getProduct_quantity()+quantity);
 				}
-
 				flag = false;
 			}
 		}
 		if (flag) {
+			Product add = itemOpt.get();
+			add.setQuantity(quantity);
 			cart.getProducts().add(itemOpt.get());
 		}
 
@@ -161,7 +162,7 @@ public class CartServiceImpl implements CartService {
 			for (int i = 0; i < itemList.size(); i++) {
 				Product element = itemList.get(i);
 				if (element.getProductId() == productId) {
-					cart.setProduct_quantity(cart.getProduct_quantity() + 1);
+					cart.setProduct_quantity(cart.getProduct_quantity() - 1);
 					flag = false;
 				}
 			}

@@ -2,6 +2,7 @@ package com.example.techecommerceserver.implementation;
 
 
 import com.example.techecommerceserver.dto.LoginFacebookDTO;
+import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.LoginException;
 import com.example.techecommerceserver.model.Admin;
 import com.example.techecommerceserver.model.CurrentUserSession;
@@ -11,6 +12,7 @@ import com.example.techecommerceserver.repository.AdminRepo;
 import com.example.techecommerceserver.repository.CurrentUserSessionRepo;
 import com.example.techecommerceserver.repository.CustomerRepo;
 import com.example.techecommerceserver.response.LoginResponse;
+import com.example.techecommerceserver.service.CustomerService;
 import com.example.techecommerceserver.service.LoginService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class LoginServiceImpl implements LoginService {
 
 	@Autowired
 	private CustomerRepo customerRepo;
+	@Autowired
+	private CustomerService customerService;
 
 	@Autowired
 	private AdminRepo adminRepo;
@@ -99,7 +103,13 @@ public class LoginServiceImpl implements LoginService {
 		if (loginDTO.getRole().equalsIgnoreCase("customer")) {
 			Customer rq = new Customer(loginDTO.getName(),loginDTO.getUsername(),loginDTO.getPhone_number(),loginDTO.getEmail(),loginDTO.getPassword());
 			Customer customer = customerRepo.findByUsername(loginDTO.getUsername());
-			if (customer == null)customerRepo.save(rq);
+			if (customer == null) {
+				try {
+					customerService.addCustomer(rq);
+				} catch (CustomerException e) {
+					throw new RuntimeException(e);
+				}
+			}
 			else{
 				if (customer.getPassword().equals(loginDTO.getPassword())) {
 

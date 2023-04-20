@@ -4,6 +4,7 @@ import com.example.techecommerceserver.dto.ProductDto;
 import com.example.techecommerceserver.exception.ProductException;
 import com.example.techecommerceserver.model.Product;
 import com.example.techecommerceserver.service.ProductService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
+@Log4j2
 @RequestMapping("/products")
 public class ProductController {
 

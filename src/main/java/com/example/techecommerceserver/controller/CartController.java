@@ -11,16 +11,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/customer/cart")
 public class CartController {
 
 	@Autowired
 	private CartService cService;
 
-	@PostMapping("/add")
-	public ResponseEntity<Cart> addProductToCart(@RequestParam("customerId") Integer cId,
-												 @RequestParam("productId") Integer productId,@RequestParam("quantity")int quantity) throws CartException, CustomerException, ProductException {
-		return new ResponseEntity<Cart>(cService.addProductToCart(cId, productId,quantity), HttpStatus.OK);
+	@PostMapping("/add/{customerId}/{productId}/{quantity}")
+	public ResponseEntity<Cart> addProductToCart(@PathVariable(value = "customerId") Integer customerId,
+												 @PathVariable(value = "productId") Integer productId,@PathVariable(value = "quantity")int quantity) throws CartException, CustomerException, ProductException {
+		return new ResponseEntity<Cart>(cService.addProductToCart(customerId, productId,quantity), HttpStatus.OK);
 
 	}
 

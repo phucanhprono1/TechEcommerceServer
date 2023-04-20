@@ -13,13 +13,14 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer productId;
 	private String productName;
-	private Double price;
+	private float price;
 	private String color;
 	private String description;
 	private String image;
 	private String size;
 	private String manufacturer;
 	private int quantity;
+	private int availability;
 	private int numberSell;
 
 	@ManyToOne(cascade = CascadeType.MERGE)

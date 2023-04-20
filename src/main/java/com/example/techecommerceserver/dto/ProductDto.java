@@ -3,7 +3,7 @@ package com.example.techecommerceserver.dto;
 public class ProductDto {
     private Integer productId;
     private String productName;
-    private Double price;
+    private float price;
     private String color;
     private String description;
     private String image;
@@ -29,11 +29,11 @@ public class ProductDto {
         this.productName = productName;
     }
 
-    public Double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 

@@ -7,7 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 public class CurrentCustomerDTO {
-    @JsonIgnore
     private int id;
     private String name;
 

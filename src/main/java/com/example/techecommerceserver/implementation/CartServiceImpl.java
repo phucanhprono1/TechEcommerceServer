@@ -32,6 +32,12 @@ public class CartServiceImpl implements CartService {
 	private CartItemRepo cartItemRepo;
 
 	@Override
+	public Cart getCartById(Integer cart_id) {
+		Cart cart = cRepo.findById(cart_id).get();
+		return cart;
+	}
+
+	@Override
 	public Cart addProductToCart(Integer customerId, Integer productId)
 			throws CartException, CustomerException, ProductException {
 		Optional<Customer> opt = crRepo.findById(customerId);

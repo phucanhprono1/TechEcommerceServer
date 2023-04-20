@@ -17,6 +17,12 @@ public class CartController {
 	@Autowired
 	private CartService cService;
 
+	@GetMapping("/get-cart")
+	public ResponseEntity<Cart> getCartById(@RequestParam("cartId") Integer id) {
+		return new ResponseEntity<Cart>(cService.getCartById(id), HttpStatus.OK);
+
+	}
+
 	@PostMapping("/add")
 	public ResponseEntity<Cart> addProductToCart(@RequestParam("customerId") Integer cId,
 												 @RequestParam("productId") Integer productId) throws CartException, CustomerException, ProductException {

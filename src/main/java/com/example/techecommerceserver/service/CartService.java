@@ -8,6 +8,8 @@ import com.example.techecommerceserver.model.Cart;
 
 public interface CartService {
 
+	public Cart getCartById(Integer cart_id);
+
 	public Cart addProductToCart(Integer customerId, Integer productId)
 			throws CartException, CustomerException, ProductException;
 
@@ -21,5 +23,4 @@ public interface CartService {
 
 	public Cart decreaseProductQuantity(Integer customerId, Integer productId)
 			throws CartException, CustomerException, ProductException;
-
 }

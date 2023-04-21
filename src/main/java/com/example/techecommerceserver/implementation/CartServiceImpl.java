@@ -5,6 +5,7 @@ import com.example.techecommerceserver.exception.CartException;
 import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.ProductException;
 import com.example.techecommerceserver.model.Cart;
+import com.example.techecommerceserver.model.CartItem;
 import com.example.techecommerceserver.model.Customer;
 import com.example.techecommerceserver.model.Product;
 import com.example.techecommerceserver.repository.CartRepo;
@@ -39,29 +40,26 @@ public class CartServiceImpl implements CartService {
 		Optional<Product> itemOpt = pRepo.findById(productId);
 		if (itemOpt.isEmpty())
 			throw new ProductException("Product not found!");
+		CartItem cartItem = new CartItem();
+		cartItem.setProduct(itemOpt.get());
+		cartItem.setQuantity(quantity);
 
-		Customer customer = opt.get();
-		Cart cart = customer.getCart();
-		float price = 0;
-		List<Product> itemList = cart.getProducts();
-		boolean flag = true;
-		for (int i = 0; i < itemList.size(); i++) {
-			Product element = itemList.get(i);
-			if (element.getProductId() == productId) {
-				if (cart.getProduct_quantity() == null) {
-					cart.setProduct_quantity(quantity);
-				} else {
-					cart.setProduct_quantity(cart.getProduct_quantity()+quantity);
-				}
-				flag = false;
+		// Get the cart for the user, or create a new cart if one doesn't exist
+		Cart cart = opt.get().getCart();
+		List<CartItem> cartItems = cart.getCartItems();
+		for(int i = 0;i<cartItems.size();i++) {
+			if(cartItems.get(i).getProduct().getProductId() == productId) {
+				cartItems.get(i).setQuantity(cartItems.get(i).getQuantity()+quantity);
+
+			}
+			else{
+				CartItem cit = new CartItem();
+				cit.setProduct(itemOpt.get());
+				cit.setQuantity(quantity);
+				cartItems.add(cit);
 			}
 		}
-		if (flag) {
-			Product add = itemOpt.get();
-			add.setQuantity(quantity);
-			cart.getProducts().add(itemOpt.get());
-		}
-
+		cart.setCartItems(cartItems);
 		cRepo.save(cart);
 		return cart;
 
@@ -79,11 +77,11 @@ public class CartServiceImpl implements CartService {
 			throw new ProductException("Product not found!");
 		Customer customer = opt.get();
 		Cart cart = customer.getCart();
-		List<Product> itemList = cart.getProducts();
+		List<CartItem> itemList = cart.getCartItems();
 		boolean flag = false;
 		for (int i = 0; i < itemList.size(); i++) {
-			Product element = itemList.get(i);
-			if (element.getProductId() == productId) {
+			CartItem element = itemList.get(i);
+			if (element.getProduct().getProductId() == productId) {
 				itemList.remove(element);
 				flag = true;
 				break;
@@ -92,7 +90,7 @@ public class CartServiceImpl implements CartService {
 		if (!flag) {
 			throw new CartException("Product not removed from cart");
 		}
-		cart.setProducts(itemList);
+		cart.setCartItems(itemList);
 		cRepo.save(cart);
 		return cart;
 
@@ -107,7 +105,7 @@ public class CartServiceImpl implements CartService {
 		if (c == null) {
 			throw new CartException("cart not found");
 		}
-		c.getProducts().clear();
+		c.getCartItems().clear();
 		return cRepo.save(c);
 
 	}
@@ -125,17 +123,18 @@ public class CartServiceImpl implements CartService {
 
 		Customer customer = opt.get();
 		Cart cart = customer.getCart();
-		List<Product> itemList = cart.getProducts();
+		List<CartItem> itemList = cart.getCartItems();
 		boolean flag = true;
 		for (int i = 0; i < itemList.size(); i++) {
-			Product element = itemList.get(i);
-			if (element.getProductId() == productId) {
+			CartItem element = itemList.get(i);
+			if (element.getProduct().getProductId() == productId) {
 				cart.setProduct_quantity(cart.getProduct_quantity() + 1);
+				cart.getCartItems().get(i).setQuantity(element.getQuantity() + 1);
 				flag = false;
 			}
 		}
 		if (flag) {
-			cart.getProducts().add(itemOpt.get());
+			throw new CartException("Product not found in cart");
 		}
 
 		cRepo.save(cart);
@@ -156,22 +155,22 @@ public class CartServiceImpl implements CartService {
 
 		Customer customer = opt.get();
 		Cart cart = customer.getCart();
-		List<Product> itemList = cart.getProducts();
+		List<CartItem> itemList = cart.getCartItems();
 		boolean flag = true;
 		if (itemList.size() > 0) {
 			for (int i = 0; i < itemList.size(); i++) {
-				Product element = itemList.get(i);
-				if (element.getProductId() == productId) {
+				CartItem element = itemList.get(i);
+				if (element.getProduct().getProductId() == productId) {
 					cart.setProduct_quantity(cart.getProduct_quantity() - 1);
+					cart.getCartItems().get(i).setQuantity(element.getQuantity() - 1);
 					flag = false;
 				}
 			}
 		}
 
 		if (flag) {
-			cart.getProducts().add(itemOpt.get());
+			throw new CartException("Product not found in cart");
 		}
-
 		cRepo.save(cart);
 		return cart;
 	}

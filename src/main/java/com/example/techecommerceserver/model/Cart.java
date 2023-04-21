@@ -3,6 +3,7 @@ package com.example.techecommerceserver.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -13,9 +14,10 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer cartId;
 	private Integer product_quantity;
-	
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Product> products;
+
+	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+	private List<CartItem> cartItems = new ArrayList<>();
+
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Customer customer;

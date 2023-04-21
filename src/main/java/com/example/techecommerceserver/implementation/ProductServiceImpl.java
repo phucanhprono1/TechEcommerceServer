@@ -97,7 +97,7 @@ public class ProductServiceImpl implements ProductService {
 		product.setManufacturer(productDto.getManufacturer());
 //		product.setSize(productDto.getSize());
 		product.setPrice(productDto.getPrice());
-		product.setQuantity(productDto.getQuantity());
+//		product.setQuantity(productDto.getQuantity());
 		product.setNumberSell(productDto.getNumberSell());
 		product.setCategory(cRepo.getOne(productDto.getCategoryId()));
 		return product;

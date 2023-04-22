@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
@@ -18,14 +17,14 @@ public class CurrentUserSession {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer currSessionId;
 
-	@NotNull(message = "Email is required")
-	@Email
-	private String email;
+	@NotNull(message = "username is require")
 
-	@NotNull(message = "Date time is required")
+	private String username;
+
+	@NotNull(message = "Date time is require")
 	private LocalDateTime loginDateTime;
 
-	@NotNull(message = "Role is required")
+	@NotNull(message = "Role is require")
 	private String role;
 
 	private String privateKey;

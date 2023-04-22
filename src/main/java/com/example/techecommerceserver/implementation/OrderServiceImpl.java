@@ -5,13 +5,13 @@ import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.OrderException;
 import com.example.techecommerceserver.model.*;
 import com.example.techecommerceserver.repository.AddressRepo;
+import com.example.techecommerceserver.repository.CartRepo;
 import com.example.techecommerceserver.repository.CustomerRepo;
-import com.example.techecommerceserver.repository.OrderDetailRepo;
 import com.example.techecommerceserver.repository.OrderRepo;
+import com.example.techecommerceserver.service.CartService;
 import com.example.techecommerceserver.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,66 +25,73 @@ public class OrderServiceImpl implements OrderService {
 	private OrderRepo oRepo;
 
 	@Autowired
-	private OrderDetailRepo orderDetailRepo;
-
+	private CartRepo cartRepo;
+	@Autowired
+	private CartService cartService;
 	@Autowired
 	private CustomerRepo customerRepo;
+
 
 	@Autowired
 	private AddressRepo addressRepo;
 
 	@Override
-	public Orders addOrder(Integer cid, String address, String payment_method) throws OrderException, CustomerException, CartException {
-		Optional<Customer> opt = customerRepo.findById(cid);
-		if (opt.isEmpty()) {
-			throw new CustomerException("Customer not found");
-		}
+	public Orders addOrder(Integer cid, String locations, String payment_method) throws OrderException, CustomerException, CartException {
 
+		Optional<Customer> opt = customerRepo.findById(cid);
+//		if (opt.isEmpty()) {
+//			throw new CustomerException("Customer not found");
+//		}
+//
 		Customer c = opt.get();
 		Cart cart = c.getCart();
-		Orders o = new Orders();
-		o.setPayment_method(payment_method);
-		o.setDate(LocalDateTime.now());
-		o.setOrderStatus("Pending");
-		o.setAddress(address);
-		o.setCustomer(c);
-		if (cart.getCartItems().isEmpty()) {
-			throw new CartException("add minimum one product to order!");
-		} else {
-			List<CartItem> b = new ArrayList<>(cart.getCartItems());
-			List<OrderDetail> res = new ArrayList<>();
-			for(CartItem p: b){
-				OrderDetail m = new OrderDetail();
-				m.setCustomer(p.getCustomer());
-				m.setProduct(p.getProduct());
-				m.setNumberSell(p.getNumberSell());
-				res.add(m);
-				orderDetailRepo.save(m);
-			}
-			o.setOrderDetails(new ArrayList<>(res));
-			o.setTotal_price(cart.getTotal_price());
-			return oRepo.save(o);
-/*			List<OrderDetail> temp = orderDetailRepo.findAll();
-			List<OrderDetail> res1 = new ArrayList<>();
-			for (OrderDetail as: temp){
-				if(as.getCustomer().getCId() == cid && as.getOrder_id() == 0){
-					as.setOrder_id(orders.getOrderId());
-					res1.add(as);
-					orderDetailRepo.save(as);
-				}
-			}
-			orders.setOrderDetails(res1);
-			return oRepo.save(orders);*/
+//		Orders o = new Orders();
+//
+//		o.setDate(LocalDateTime.now());
+//		o.setOrderStatus("Pending");
+//		o.setAddress(c.getAddress());
+//		o.setCustomer(c);
+//		if (cart.getCartItems().isEmpty()) {
+//			throw new CartException("add minimum one product to order!");
+//		} else {
+//			o.getOrderItems().addAll(cart.getCartItems());
+//			float k = 0;
+//			for(Product m :cart.getProducts()){
+//				k += m.getPrice();
+//			}
+//			o.setTotal_price(k);
+//			return oRepo.save(o);
+//		}
+		Orders order = new Orders();
+		order.setCustomer(c);
+		order.setDate(LocalDateTime.now());
+		order.setOrderStatus("Pending");
+		order.setLocations(locations);
+		order.setPayment_method(payment_method);
+//
+		float k = 0;
+		List<OrderItem> orderItems = new ArrayList<>();
+		for (CartItem cartItem : cart.getCartItems()) {
+			OrderItem orderItem = new OrderItem();
+			orderItem.setProduct(cartItem.getProduct());
+			orderItem.setQuantity(cartItem.getQuantity());
+			k+=cartItem.getProduct().getPrice()*cartItem.getQuantity();
+			orderItem.setOrder(order);
+			orderItems.add(orderItem);
 		}
+		order.setTotal_price(k);
+		order.setOrderItems(orderItems);
+		Orders savedOrder = oRepo.save(order);
+		cartService.removeAllProduct(c.getCId());
+		return savedOrder;
 	}
 
 	@Override
-	public Orders updateOrder(int id, String address,String payment_method) throws OrderException {
+	public Orders updateOrder(int id, String locations,String payment_method) throws OrderException {
 		Orders o = oRepo.findById(id).orElseThrow(() -> new OrderException("Order not found"));
-		Optional<Customer> opt = customerRepo.findById(id);
-		o.setAddress(address);
+		//Optional<Customer> opt = customerRepo.findById(id);
+		o.setLocations(locations);
 		o.setPayment_method(payment_method);
-		OrderDTO a = new OrderDTO();
 		return oRepo.save(o);
 	}
 
@@ -92,15 +99,14 @@ public class OrderServiceImpl implements OrderService {
 	public Orders viewOrder(Integer orderId) throws OrderException {
 		Optional<Orders> o = oRepo.findById(orderId);
 		if (o.isPresent()) {
-/*			OrderDTO a = new OrderDTO();
-			a.setOrderId(o.get().getOrderId());
-			a.setOrderStatus(o.get().getOrderStatus());
-			a.setDate(o.get().getDate());
-			a.setCartItems(o.get().getCartItems());
-			a.setCustomer(o.get().getCustomer());
-			a.setAddress(o.get().getAddress());
-			a.setPayment_method(o.get().getPayment_method());
-			a.setPrice(o.get().getTotal_price());*/
+			//OrderDTO a = new OrderDTO();
+//			a.setOrderId(o.get().getOrderId());
+//			a.setOrderStatus(o.get().getOrderStatus());
+//			a.setDate(o.get().getDate());
+//			a.setProductList(o.get().getProductList());
+//			a.setCustomer(o.get().getCustomer());
+//			a.setAddress(o.get().getAddress());
+//			a.setPrice(o.get().getTotal_price());
 			return o.get();
 		} else {
 			throw new OrderException("order not present!!");
@@ -127,4 +133,17 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
+	@Override
+	public Orders confirmOrder(Integer orderId){
+		Orders orders = oRepo.findById(orderId).get();
+		orders.setOrderStatus("Xác nhận");
+		return oRepo.save(orders);
+	}
+
+	@Override
+	public Orders cancelOrder(Integer orderId){
+		Orders orders = oRepo.findById(orderId).get();
+		orders.setOrderStatus("Đã hủy");
+		return oRepo.save(orders);
+	}
 }

@@ -1,24 +1,30 @@
 package com.example.techecommerceserver.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
-@Entity
+
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "cart_item")
 public class CartItem {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Customer customer;
+    @Column(nullable = false)
+    private int quantity;
 
-    private int numberSell;
+    @ManyToOne
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
 }

@@ -1,10 +1,10 @@
 package com.example.techecommerceserver.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -12,23 +12,25 @@ import java.util.List;
 public class Orders {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer orderId;
+
 	private LocalDateTime date;
 	private String orderStatus;
+	private String locations;
+	private String payment_method;
 
 	@Column(name="total_price")
-	private double total_price;
+	private float total_price;
 
-	@JsonIgnore
+
+//	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Customer customer;
 
-	@Embedded
-	@ElementCollection
-	private List<OrderDetail> orderDetails;
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<OrderItem> orderItems = new ArrayList<>();
 
-	private String address;
-
-	private String payment_method;
+//	@JsonIgnore
+	//@OneToOne(cascade = CascadeType.ALL)
 }

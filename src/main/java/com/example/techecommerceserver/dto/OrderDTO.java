@@ -1,11 +1,12 @@
-package com.example.techecommerceserver.model;
+package com.example.techecommerceserver.dto;
 
-import lombok.Data;
+import com.example.techecommerceserver.model.Address;
+import com.example.techecommerceserver.model.Customer;
+import com.example.techecommerceserver.model.Product;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
 public class OrderDTO {
     private Integer orderId;
 
@@ -15,13 +16,11 @@ public class OrderDTO {
 
     private Customer customer;
 
-    private List<CartItem> cartItems;
+    private List<Product> productList;
 
-    private String address;
+    private Address address;
 
-    private String payment_method;
-
-    private double price;
+    private float price;
 
     public OrderDTO() {
 
@@ -59,35 +58,27 @@ public class OrderDTO {
         this.customer = customer;
     }
 
-    public List<CartItem> getCartItems() {
-        return cartItems;
+    public List<Product> getProductList() {
+        return productList;
     }
 
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 
-    public String getPayment_method() {
-        return payment_method;
-    }
-
-    public void setPayment_method(String payment_method) {
-        this.payment_method = payment_method;
-    }
-
-    public double getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 }

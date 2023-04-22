@@ -2,6 +2,7 @@ package com.example.techecommerceserver.service;
 
 
 
+import com.example.techecommerceserver.dto.ProductDto;
 import com.example.techecommerceserver.exception.ProductException;
 import com.example.techecommerceserver.model.Product;
 
@@ -13,7 +14,7 @@ public interface ProductService {
 
 	public Product addProduct(Product product) throws ProductException;
 
-	public Product updateProduct(Product product) throws ProductException;
+	public Product updateProduct(Integer id, ProductDto productDto) throws ProductException;
 
 	public Product viewProduct(Integer productId) throws ProductException;
 

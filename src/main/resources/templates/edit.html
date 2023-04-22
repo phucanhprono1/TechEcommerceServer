@@ -23,7 +23,7 @@ form.addEventListener('submit', function(event) {
   const url = window.location.href;
   let parts = url.split("=");
   let id = parts[parts.length-1];
-  const api = 'http://localhost:8080/orders/update?address=' + a + '&payment_method=' + b + '&id=' + id;
+  const api = 'http://localhost:8080/orders/update?locations=' + a + '&payment_method=' + b + '&id=' + id;
   fetch(api , {
       method: 'PUT',
       headers: {'content_type': 'application/json'},

@@ -1,30 +1,35 @@
 package com.example.techecommerceserver.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
-@Table(name="product")
 @Embeddable
 @Entity
+@AllArgsConstructor
 public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer productId;
 	private String productName;
-	private Double price;
+	private float price;
 	private String color;
-	private String dimension;
-	private String specification;
-	private String menufacturer;
-	private String link;
-	private int quantity;
-	//private int numberSell;
+	private String description;
+	private String image;
+	private String size;
+	private String manufacturer;
+	private int availability;
+	private int numberSell;
 
-
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "category_id")
 	private Category category;
+
+
+	public Product() {
+
+	}
 }

@@ -3,6 +3,7 @@ package com.example.techecommerceserver.controller;
 import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.model.Customer;
 import com.example.techecommerceserver.service.CustomerService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
+@Log4j2
 @RequestMapping("/customers")
 public class CustomerController {
 

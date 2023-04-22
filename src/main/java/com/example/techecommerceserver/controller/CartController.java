@@ -11,47 +11,40 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/customer/cart")
 public class CartController {
 
 	@Autowired
 	private CartService cService;
 
-	@GetMapping("/get-cart")
-	public ResponseEntity<Cart> getCartById(@RequestParam("cartId") Integer id) {
-		return new ResponseEntity<Cart>(cService.getCartById(id), HttpStatus.OK);
+	@PostMapping("/add/{customerId}/{productId}/{quantity}")
+	public ResponseEntity<Cart> addProductToCart(@PathVariable(value = "customerId") Integer customerId,
+												 @PathVariable(value = "productId") Integer productId,@PathVariable(value = "quantity")int quantity) throws CartException, CustomerException, ProductException {
+		return new ResponseEntity<Cart>(cService.addProductToCart(customerId, productId,quantity), HttpStatus.OK);
 
 	}
 
-	@PostMapping("/add")
-	public ResponseEntity<Cart> addProductToCart(@RequestParam("customerId") Integer cId,
-												 @RequestParam("productId") Integer productId) throws CartException, CustomerException, ProductException {
-		return new ResponseEntity<Cart>(cService.addProductToCart(cId, productId), HttpStatus.OK);
-
+	@DeleteMapping("/remove/{cartId}/{productId}")
+	public ResponseEntity<Cart> removeProductFromCart(@PathVariable("cartId") Integer cartId,
+			@PathVariable("productId") Integer productId) throws CartException, CustomerException, ProductException {
+		return new ResponseEntity<Cart>(cService.removeProductFromCart(cartId, productId), HttpStatus.OK);
 	}
 
-	/*@DeleteMapping("/remove")
-	public ResponseEntity<Cart> removeProductFromCart(@RequestParam("customerId") Integer customerId,
-			@RequestParam("productId") Integer productId) throws CartException, CustomerException, ProductException {
-		return new ResponseEntity<Cart>(cService.removeProductFromCart(customerId, productId), HttpStatus.OK);
-	}*/
-
-	/*
-	@DeleteMapping("/removeAll")
-	public ResponseEntity<Cart> removeAllProduct(@RequestParam ("customerId") Integer customerId)
+	@DeleteMapping("/remove/{cartId}")
+	public ResponseEntity<Cart> removeAllProduct(@PathVariable("cartId") Integer cartId)
 			throws CartException, CustomerException {
-		return new ResponseEntity<Cart>(cService.removeAllProduct(customerId), HttpStatus.OK);
-	}*/
-
-	@PutMapping("/increase")
-	public ResponseEntity<Cart> increaseProductQuantity(@RequestParam("customerId") Integer customerId,
-			@RequestParam("productId") Integer productId) throws CartException, CustomerException, ProductException {
-		return new ResponseEntity<Cart>(cService.increaseProductQuantity(customerId, productId), HttpStatus.OK);
+		return new ResponseEntity<Cart>(cService.removeAllProduct(cartId), HttpStatus.OK);
 	}
 
-	@PutMapping("/decrease")
-	public ResponseEntity<Cart> decreaseProductQuantity(@RequestParam("customerId") Integer customerId,
-			@RequestParam("productId") Integer productId) throws CartException, CustomerException, ProductException {
-		return new ResponseEntity<Cart>(cService.decreaseProductQuantity(customerId, productId), HttpStatus.OK);
+	@PutMapping("/increase/{cartId}/{productId}")
+	public ResponseEntity<Cart> increaseProductQuantity(@PathVariable("cartId") Integer cartId,
+			@PathVariable("productId") Integer productId) throws CartException, CustomerException, ProductException {
+		return new ResponseEntity<Cart>(cService.increaseProductQuantity(cartId, productId), HttpStatus.OK);
+	}
+
+	@PutMapping("/decrease/{cartId}/{productId}")
+	public ResponseEntity<Cart> decreaseProductQuantity(@PathVariable("cartId") Integer cartId,
+			@PathVariable("productId") Integer productId) throws CartException, CustomerException, ProductException {
+		return new ResponseEntity<Cart>(cService.decreaseProductQuantity(cartId, productId), HttpStatus.OK);
 	}
 }

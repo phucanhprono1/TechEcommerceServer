@@ -1,5 +1,6 @@
 package com.example.techecommerceserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class Cart {
 	@OneToMany( cascade = CascadeType.ALL)
 	private List<CartItem> cartItems = new ArrayList<>();
 
-
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	private Customer customer;
 }

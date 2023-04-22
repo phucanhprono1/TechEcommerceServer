@@ -64,6 +64,7 @@ public class CartServiceImpl implements CartService {
 			cit.setQuantity(quantity);
 			cartItemRepo.save(cit);
 			cartItems.add(cit);
+			cart.setProduct_quantity(quantity);
 		}
 		cart.setCartItems(cartItems);
 
@@ -118,13 +119,13 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public Cart increaseProductQuantity(Integer customerId, Integer productId)
+	public Cart increaseProductQuantity(Integer customerId, Integer cartItemId)
 			throws CartException, CustomerException, ProductException {
 		Optional<Customer> opt = crRepo.findById(customerId);
 		if (opt.isEmpty())
 			throw new CustomerException("Customer not found!");
 
-		Optional<Product> itemOpt = pRepo.findById(productId);
+		Optional<CartItem> itemOpt = cartItemRepo.findById(cartItemId);
 		if (itemOpt.isEmpty())
 			throw new ProductException("Product not found!");
 
@@ -134,7 +135,7 @@ public class CartServiceImpl implements CartService {
 		boolean flag = true;
 		for (int i = 0; i < itemList.size(); i++) {
 			CartItem element = itemList.get(i);
-			if (element.getProduct().getProductId() == productId) {
+			if (element.getId() == cartItemId) {
 				cart.setProduct_quantity(cart.getProduct_quantity() + 1);
 				cart.getCartItems().get(i).setQuantity(element.getQuantity() + 1);
 				flag = false;
@@ -150,13 +151,13 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public Cart decreaseProductQuantity(Integer customerId, Integer productId)
+	public Cart decreaseProductQuantity(Integer customerId, Integer cartItemId)
 			throws CartException, CustomerException, ProductException {
 		Optional<Customer> opt = crRepo.findById(customerId);
 		if (opt.isEmpty())
 			throw new CustomerException("Customer not found!");
 
-		Optional<Product> itemOpt = pRepo.findById(productId);
+		Optional<CartItem> itemOpt = cartItemRepo.findById(cartItemId);
 		if (itemOpt.isEmpty())
 			throw new ProductException("Product not found!");
 
@@ -167,7 +168,7 @@ public class CartServiceImpl implements CartService {
 		if (itemList.size() > 0) {
 			for (int i = 0; i < itemList.size(); i++) {
 				CartItem element = itemList.get(i);
-				if (element.getProduct().getProductId() == productId) {
+				if (element.getId() == cartItemId) {
 					cart.setProduct_quantity(cart.getProduct_quantity() - 1);
 					cart.getCartItems().get(i).setQuantity(element.getQuantity() - 1);
 					flag = false;

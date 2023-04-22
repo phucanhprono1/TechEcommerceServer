@@ -59,7 +59,7 @@ public class LoginServiceImpl implements LoginService {
 				currentUserSession.setPrivateKey(privateKey);
 
 				sessionRepo.save(currentUserSession);
-				LoginResponse lr = new LoginResponse("Login Successfully!",loginDTO.getUsername(),"customer",privateKey);
+				LoginResponse lr = new LoginResponse("Login Successfully!",customer.getCId(),loginDTO.getUsername(),"customer",privateKey);
 				return lr;
 			} else {
 				throw new LoginException("Please Enter a valid password");
@@ -83,7 +83,7 @@ public class LoginServiceImpl implements LoginService {
 				currentUserSession.setRole("admin");
 				String privateKey = RandomString.make(10);
 				currentUserSession.setPrivateKey(privateKey);
-				LoginResponse lr = new LoginResponse("Login Successfully!",loginDTO.getUsername(),"admin",privateKey);
+				LoginResponse lr = new LoginResponse("Login Successfully!",admin.getAdminId(),loginDTO.getUsername(),"admin",privateKey);
 				sessionRepo.save(currentUserSession);
 				return lr;
 			} else {
@@ -126,7 +126,7 @@ public class LoginServiceImpl implements LoginService {
 					currentUserSession.setPrivateKey(privateKey);
 
 					sessionRepo.save(currentUserSession);
-					LoginResponse lr = new LoginResponse("Login Successfully!",loginDTO.getUsername(),"customer",privateKey);
+					LoginResponse lr = new LoginResponse("Login Successfully!",customer.getCId(),loginDTO.getUsername(),"customer",privateKey);
 					return lr;
 				} else {
 					throw new LoginException("Please Enter a valid password");

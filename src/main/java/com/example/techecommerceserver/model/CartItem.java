@@ -14,8 +14,8 @@ import javax.persistence.*;
 @Table(name = "cart_item")
 public class CartItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
@@ -25,6 +25,6 @@ public class CartItem {
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id", nullable = false)
+//    @JoinColumn(name = "cart_id",nullable = false)
     private Cart cart;
 }

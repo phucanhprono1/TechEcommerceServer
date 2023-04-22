@@ -8,6 +8,7 @@ import com.example.techecommerceserver.model.Cart;
 import com.example.techecommerceserver.model.CartItem;
 import com.example.techecommerceserver.model.Customer;
 import com.example.techecommerceserver.model.Product;
+import com.example.techecommerceserver.repository.CartItemRepo;
 import com.example.techecommerceserver.repository.CartRepo;
 import com.example.techecommerceserver.repository.CustomerRepo;
 import com.example.techecommerceserver.repository.ProductRepo;
@@ -29,6 +30,8 @@ public class CartServiceImpl implements CartService {
 
 	@Autowired
 	private ProductRepo pRepo;
+	@Autowired
+	private CartItemRepo cartItemRepo;
 
 	@Override
 	public Cart addProductToCart(Integer customerId, Integer productId,int quantity)
@@ -47,19 +50,23 @@ public class CartServiceImpl implements CartService {
 		// Get the cart for the user, or create a new cart if one doesn't exist
 		Cart cart = opt.get().getCart();
 		List<CartItem> cartItems = cart.getCartItems();
+		boolean flag = true;
 		for(int i = 0;i<cartItems.size();i++) {
 			if(cartItems.get(i).getProduct().getProductId() == productId) {
-				cartItems.get(i).setQuantity(cartItems.get(i).getQuantity()+quantity);
-
-			}
-			else{
-				CartItem cit = new CartItem();
-				cit.setProduct(itemOpt.get());
-				cit.setQuantity(quantity);
-				cartItems.add(cit);
+				cartItems.get(i).setQuantity(cartItems.get(i).getQuantity() + quantity);
+				flag = false;
+				break;
 			}
 		}
+		if(flag) {
+			CartItem cit = new CartItem();
+			cit.setProduct(itemOpt.get());
+			cit.setQuantity(quantity);
+			cartItemRepo.save(cit);
+			cartItems.add(cit);
+		}
 		cart.setCartItems(cartItems);
+
 		cRepo.save(cart);
 		return cart;
 

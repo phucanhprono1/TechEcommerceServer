@@ -89,16 +89,30 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 
+	@Override
+	public long countProduct() throws ProductException {
+		return pRepo.count();
+	}
+
+	@Override
+	public long countEndProduct() throws ProductException {
+		return pRepo.countEnd();
+	}
+
+	@Override
+	public List<Product> viewTopSell() throws IllegalArgumentException {
+		return pRepo.topSell();
+	}
+
 	private Product mapFromDtoToProduct(ProductDto productDto, Product product) {
 		product.setProductName(productDto.getProductName());
 		product.setImage(productDto.getImage());
 		product.setColor(productDto.getColor());
 		product.setDescription(productDto.getDescription());
 		product.setManufacturer(productDto.getManufacturer());
-//		product.setSize(productDto.getSize());
+		product.setSize(productDto.getSize());
 		product.setPrice(productDto.getPrice());
-//		product.setQuantity(productDto.getQuantity());
-		product.setNumberSell(productDto.getNumberSell());
+		product.setQuantity(productDto.getQuantity());
 		product.setCategory(cRepo.getOne(productDto.getCategoryId()));
 		return product;
 	}

@@ -33,9 +33,8 @@ public class ProductController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Product> updateProduct(@PathVariable Integer id,@RequestBody ProductDto p) throws ProductException {
-		pService.updateProduct(id,p);
-		return new ResponseEntity<Product>(HttpStatus.OK);
+	public Product updateProduct(@PathVariable Integer id,@RequestBody ProductDto p) throws ProductException {
+		return pService.updateProduct(id,p);
 	}
 
 	@GetMapping("/viewProduct/{productId}")
@@ -53,6 +52,18 @@ public class ProductController {
 	public ResponseEntity<Product> removeProductById(@PathVariable Integer productId)
 			throws ProductException {
 		return new ResponseEntity<Product>(pService.removeProduct(productId), HttpStatus.OK);
+	}
+	@GetMapping("/count")
+	public long countNumberProduct() throws ProductException {
+		return pService.countProduct();
+	}
+	@GetMapping("/countEnd")
+	public long countEndProduct() throws ProductException {
+		return pService.countEndProduct();
+	}
+	@GetMapping("/topSell")
+	public ResponseEntity<List<Product>> getTopSell() throws IllegalArgumentException {
+		return new ResponseEntity<List<Product>>(pService.viewTopSell(), HttpStatus.OK);
 	}
 
 }

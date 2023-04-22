@@ -152,4 +152,9 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 
+	@Override
+	public long countOrder() throws OrderException {
+		return oRepo.count();
+	}
+
 }

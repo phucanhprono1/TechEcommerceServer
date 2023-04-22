@@ -16,4 +16,5 @@ public interface CustomerService {
 	public List<Customer> viewAllCustomer() throws CustomerException;
 	public Customer findCustomerByUsername(String customerUsername) throws CustomerException;
 
+	long countCustomer() throws CustomerException;
 }

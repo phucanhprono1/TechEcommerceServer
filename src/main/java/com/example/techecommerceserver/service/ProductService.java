@@ -22,4 +22,9 @@ public interface ProductService {
 
 	public Product removeProduct(Integer productId) throws ProductException;
 
+	long countProduct() throws ProductException;
+
+    long countEndProduct() throws ProductException;
+
+	List<Product> viewTopSell() throws IllegalArgumentException;
 }

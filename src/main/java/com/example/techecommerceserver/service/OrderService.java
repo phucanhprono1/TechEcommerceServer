@@ -21,4 +21,5 @@ public interface OrderService {
 
 	public List<Orders> viewAllOrdersByUserId(Integer userId) throws OrderException;
 
+	long countOrder() throws OrderException;
 }

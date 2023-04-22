@@ -2,15 +2,12 @@ package com.example.techecommerceserver.implementation;
 
 import com.example.techecommerceserver.dto.CategoryDto;
 import com.example.techecommerceserver.exception.CategoryException;
-import com.example.techecommerceserver.exception.ProductException;
 import com.example.techecommerceserver.model.Category;
-import com.example.techecommerceserver.model.Product;
 import com.example.techecommerceserver.repository.CategoryRepo;
 import com.example.techecommerceserver.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.catalog.CatalogException;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +42,17 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = mapFromDtoToCategory(categoryDto, opt);
         categoryRepo.save(category);
         return category;
+    }
+
+    @Override
+    public Category getById(Integer id) throws CategoryException{
+        Category p = categoryRepo.findById(id).orElseThrow(() -> new CategoryException("Category not found"));
+        return p;
+    }
+
+    @Override
+    public long countCategory() throws CategoryException {
+        return categoryRepo.count();
     }
 
     @Override

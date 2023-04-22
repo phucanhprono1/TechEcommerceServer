@@ -28,6 +28,10 @@ public class CategoryController {
     public ResponseEntity<List<Category>> getAllCategory() throws CategoryException {
         return new ResponseEntity<List<Category>>(categoryService.getAllCategory(), HttpStatus.OK);
     }
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable Integer id) throws CategoryException{
+        return new ResponseEntity<Category>(categoryService.getById(id), HttpStatus.OK);
+    }
     @PostMapping("/add")
     public ResponseEntity<Category> addCategory(@RequestBody Category category) throws CategoryException {
         Category category1 = categoryService.addCategory(category);
@@ -42,5 +46,9 @@ public class CategoryController {
     public ResponseEntity<Category> removeCategoryById(@PathVariable Integer categoryId)
             throws CategoryException {
         return new ResponseEntity<Category>(categoryService.removeCategory(categoryId), HttpStatus.OK);
+    }
+    @GetMapping("/count")
+    public long countNumberCategory() throws CategoryException {
+        return categoryService.countCategory();
     }
 }

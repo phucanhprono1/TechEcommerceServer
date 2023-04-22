@@ -1,6 +1,7 @@
 package com.example.techecommerceserver.controller;
 
 import com.example.techecommerceserver.exception.CustomerException;
+import com.example.techecommerceserver.exception.ProductException;
 import com.example.techecommerceserver.model.Customer;
 import com.example.techecommerceserver.service.CustomerService;
 import lombok.extern.log4j.Log4j2;
@@ -38,6 +39,10 @@ public class CustomerController {
 	@GetMapping("/view")
 	public ResponseEntity<List<Customer>> viewAllCustomer() throws CustomerException {
 		return new ResponseEntity<List<Customer>>(cService.viewAllCustomer(), HttpStatus.OK);
+	}
+	@GetMapping("/count")
+	public long countNumberCustomer() throws CustomerException {
+		return cService.countCustomer();
 	}
 
 }

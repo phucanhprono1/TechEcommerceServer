@@ -41,6 +41,7 @@ public class CartServiceImpl implements CartService {
 			throw new CustomerException("Customer not found!");
 
 		Optional<Product> itemOpt = pRepo.findById(productId);
+		Optional<CartItem> cartItemOpt = cartItemRepo.findByProductId(itemOpt.get().getProductId());
 		if (itemOpt.isEmpty())
 			throw new ProductException("Product not found!");
 		CartItem cartItem = new CartItem();
@@ -62,7 +63,9 @@ public class CartServiceImpl implements CartService {
 			CartItem cit = new CartItem();
 			cit.setProduct(itemOpt.get());
 			cit.setQuantity(quantity);
-			cartItemRepo.save(cit);
+			if(cartItemOpt == null) {
+				cartItemRepo.save(cit);
+			}
 			cartItems.add(cit);
 			cart.setProduct_quantity(cart.getProduct_quantity()+quantity);
 		}

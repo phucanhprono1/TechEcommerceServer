@@ -64,7 +64,7 @@ public class CartServiceImpl implements CartService {
 			cit.setQuantity(quantity);
 			cartItemRepo.save(cit);
 			cartItems.add(cit);
-			cart.setProduct_quantity(quantity);
+			cart.setProduct_quantity(cart.getProduct_quantity()+quantity);
 		}
 		cart.setCartItems(cartItems);
 
@@ -114,6 +114,7 @@ public class CartServiceImpl implements CartService {
 			throw new CartException("cart not found");
 		}
 		c.getCartItems().clear();
+		c.setProduct_quantity(0);
 		return cRepo.save(c);
 
 	}

@@ -34,27 +34,27 @@ public class CartController {
 			throws CartException, CustomerException {
 		return new ResponseEntity<Cart>(customerRepo.findById(customerId).get().getCart(), HttpStatus.OK);
 	}
-	@DeleteMapping("/remove/{cartId}/{productId}")
-	public ResponseEntity<Cart> removeProductFromCart(@PathVariable("cartId") Integer cartId,
+	@DeleteMapping("/remove/{customerId}/{productId}")
+	public ResponseEntity<Cart> removeProductFromCart(@PathVariable("customerId") Integer customerId,
 			@PathVariable("productId") Integer productId) throws CartException, CustomerException, ProductException {
-		return new ResponseEntity<Cart>(cService.removeProductFromCart(cartId, productId), HttpStatus.OK);
+		return new ResponseEntity<Cart>(cService.removeProductFromCart(customerId, productId), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/remove/{cartId}")
-	public ResponseEntity<Cart> removeAllProduct(@PathVariable("cartId") Integer cartId)
+	@DeleteMapping("/remove/{customerId}")
+	public ResponseEntity<Cart> removeAllProduct(@PathVariable("customerId") Integer customerId)
 			throws CartException, CustomerException {
-		return new ResponseEntity<Cart>(cService.removeAllProduct(cartId), HttpStatus.OK);
+		return new ResponseEntity<Cart>(cService.removeAllProduct(customerId), HttpStatus.OK);
 	}
 
-	@PutMapping("/increase/{cartId}/{productId}")
-	public ResponseEntity<Cart> increaseProductQuantity(@PathVariable("cartId") Integer cartId,
+	@PutMapping("/increase/{customerId}/{productId}")
+	public ResponseEntity<Cart> increaseProductQuantity(@PathVariable("customerId") Integer customerId,
 			@PathVariable("productId") Integer productId) throws CartException, CustomerException, ProductException {
-		return new ResponseEntity<Cart>(cService.increaseProductQuantity(cartId, productId), HttpStatus.OK);
+		return new ResponseEntity<Cart>(cService.increaseProductQuantity(customerId, productId), HttpStatus.OK);
 	}
 
-	@PutMapping("/decrease/{cartId}/{productId}")
-	public ResponseEntity<Cart> decreaseProductQuantity(@PathVariable("cartId") Integer cartId,
+	@PutMapping("/decrease/{customerId}/{productId}")
+	public ResponseEntity<Cart> decreaseProductQuantity(@PathVariable("customerId") Integer customerId,
 			@PathVariable("productId") Integer productId) throws CartException, CustomerException, ProductException {
-		return new ResponseEntity<Cart>(cService.decreaseProductQuantity(cartId, productId), HttpStatus.OK);
+		return new ResponseEntity<Cart>(cService.decreaseProductQuantity(customerId, productId), HttpStatus.OK);
 	}
 }

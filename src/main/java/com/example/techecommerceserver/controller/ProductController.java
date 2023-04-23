@@ -1,7 +1,6 @@
 package com.example.techecommerceserver.controller;
 
 import com.example.techecommerceserver.dto.ProductDto;
-import com.example.techecommerceserver.dto.SearchDto;
 import com.example.techecommerceserver.exception.ProductException;
 import com.example.techecommerceserver.model.Product;
 import com.example.techecommerceserver.service.ProductService;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,8 +33,9 @@ public class ProductController {
 	}
 
 	@PutMapping("/update/{id}")
-	public Product updateProduct(@PathVariable Integer id,@RequestBody ProductDto p) throws ProductException {
-		return pService.updateProduct(id,p);
+	public ResponseEntity<Product> updateProduct(@PathVariable Integer id,@RequestBody ProductDto p) throws ProductException {
+		pService.updateProduct(id,p);
+		return new ResponseEntity<Product>(HttpStatus.OK);
 	}
 
 	@GetMapping("/viewProduct/{productId}")
@@ -54,22 +53,6 @@ public class ProductController {
 	public ResponseEntity<Product> removeProductById(@PathVariable Integer productId)
 			throws ProductException {
 		return new ResponseEntity<Product>(pService.removeProduct(productId), HttpStatus.OK);
-	}
-	@GetMapping("/count")
-	public long countNumberProduct() throws ProductException {
-		return pService.countProduct();
-	}
-	@GetMapping("/countEnd")
-	public long countEndProduct() throws ProductException {
-		return pService.countEndProduct();
-	}
-	@GetMapping("/topSell")
-	public ResponseEntity<List<Product>> getTopSell() throws IllegalArgumentException {
-		return new ResponseEntity<List<Product>>(pService.viewTopSell(), HttpStatus.OK);
-	}
-	@PostMapping("/search")
-	public List<Product> updateProduct(@RequestBody SearchDto searchDto) throws ProductException {
-		return pService.search(searchDto.getContent());
 	}
 
 }

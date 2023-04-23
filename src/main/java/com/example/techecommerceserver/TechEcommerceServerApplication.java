@@ -33,11 +33,11 @@ public class TechEcommerceServerApplication {
 
 
     }
-    @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        return mapper;
-    }
+//    @Bean
+//    public ObjectMapper objectMapper() {
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+//        return mapper;
+//    }
 
 }

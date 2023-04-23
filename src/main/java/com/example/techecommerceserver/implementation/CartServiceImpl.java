@@ -26,12 +26,13 @@ public class CartServiceImpl implements CartService {
 	private CartRepo cRepo;
 
 	@Autowired
+	private CartItemRepo cartItemRepo;
+
+	@Autowired
 	private CustomerRepo crRepo;
 
 	@Autowired
 	private ProductRepo pRepo;
-	@Autowired
-	private CartItemRepo cartItemRepo;
 
 	@Override
 	public Cart addProductToCart(Integer customerId, Integer productId,int quantity)
@@ -41,43 +42,41 @@ public class CartServiceImpl implements CartService {
 			throw new CustomerException("Customer not found!");
 
 		Optional<Product> itemOpt = pRepo.findById(productId);
-		Optional<CartItem> cartItemOpt = cartItemRepo.findByProductId(itemOpt.get().getProductId());
 		if (itemOpt.isEmpty())
 			throw new ProductException("Product not found!");
 		CartItem cartItem = new CartItem();
 		cartItem.setProduct(itemOpt.get());
 		cartItem.setQuantity(quantity);
 
+		boolean flag = false;
+
 		// Get the cart for the user, or create a new cart if one doesn't exist
 		Cart cart = opt.get().getCart();
 		List<CartItem> cartItems = cart.getCartItems();
-		boolean flag = true;
 		for(int i = 0;i<cartItems.size();i++) {
 			if(cartItems.get(i).getProduct().getProductId() == productId) {
-				cartItems.get(i).setQuantity(cartItems.get(i).getQuantity() + quantity);
+				cartItems.get(i).setQuantity(cartItems.get(i).getQuantity()+quantity);
 				flag = false;
 				break;
 			}
+			/*else{
+				CartItem cit = new CartItem();
+				cit.setProduct(itemOpt.get());
+				cit.setQuantity(quantity);
+				cartItems.add(cit);
+			}*/
 		}
-		if(flag) {
+		if(flag){
 			CartItem cit = new CartItem();
 			cit.setProduct(itemOpt.get());
 			cit.setQuantity(quantity);
-			if(cartItemOpt == null) {
-				cartItemRepo.save(cit);
-			}
+			cit.setCart(opt.get().getCart());
 			cartItems.add(cit);
-			if (cart.getProduct_quantity() == null) {
-				cart.setProduct_quantity(quantity);
-			} else {
-				cart.setProduct_quantity(cart.getProduct_quantity()+quantity);
-			}
+			cartItemRepo.save(cit);
 		}
 		cart.setCartItems(cartItems);
-
 		cRepo.save(cart);
 		return cart;
-
 	}
 
 	@Override
@@ -121,19 +120,18 @@ public class CartServiceImpl implements CartService {
 			throw new CartException("cart not found");
 		}
 		c.getCartItems().clear();
-		c.setProduct_quantity(0);
 		return cRepo.save(c);
 
 	}
 
 	@Override
-	public Cart increaseProductQuantity(Integer customerId, Integer cartItemId)
+	public Cart increaseProductQuantity(Integer customerId, Integer productId)
 			throws CartException, CustomerException, ProductException {
 		Optional<Customer> opt = crRepo.findById(customerId);
 		if (opt.isEmpty())
 			throw new CustomerException("Customer not found!");
 
-		Optional<CartItem> itemOpt = cartItemRepo.findById(cartItemId);
+		Optional<Product> itemOpt = pRepo.findById(productId);
 		if (itemOpt.isEmpty())
 			throw new ProductException("Product not found!");
 
@@ -143,7 +141,7 @@ public class CartServiceImpl implements CartService {
 		boolean flag = true;
 		for (int i = 0; i < itemList.size(); i++) {
 			CartItem element = itemList.get(i);
-			if (element.getId() == cartItemId) {
+			if (element.getProduct().getProductId() == productId) {
 				cart.setProduct_quantity(cart.getProduct_quantity() + 1);
 				cart.getCartItems().get(i).setQuantity(element.getQuantity() + 1);
 				flag = false;
@@ -159,13 +157,13 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public Cart decreaseProductQuantity(Integer customerId, Integer cartItemId)
+	public Cart decreaseProductQuantity(Integer customerId, Integer productId)
 			throws CartException, CustomerException, ProductException {
 		Optional<Customer> opt = crRepo.findById(customerId);
 		if (opt.isEmpty())
 			throw new CustomerException("Customer not found!");
 
-		Optional<CartItem> itemOpt = cartItemRepo.findById(cartItemId);
+		Optional<Product> itemOpt = pRepo.findById(productId);
 		if (itemOpt.isEmpty())
 			throw new ProductException("Product not found!");
 
@@ -176,7 +174,7 @@ public class CartServiceImpl implements CartService {
 		if (itemList.size() > 0) {
 			for (int i = 0; i < itemList.size(); i++) {
 				CartItem element = itemList.get(i);
-				if (element.getId() == cartItemId) {
+				if (element.getProduct().getProductId() == productId) {
 					cart.setProduct_quantity(cart.getProduct_quantity() - 1);
 					cart.getCartItems().get(i).setQuantity(element.getQuantity() - 1);
 					flag = false;

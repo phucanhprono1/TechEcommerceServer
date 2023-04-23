@@ -1,6 +1,5 @@
 package com.example.techecommerceserver.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,14 +12,13 @@ public class Cart {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "cart_id")
 	private Integer cartId;
 	private Integer product_quantity;
 
-	@OneToMany( cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
 	private List<CartItem> cartItems = new ArrayList<>();
 
-	@JsonIgnore
+
 	@OneToOne(cascade = CascadeType.ALL)
 	private Customer customer;
 }

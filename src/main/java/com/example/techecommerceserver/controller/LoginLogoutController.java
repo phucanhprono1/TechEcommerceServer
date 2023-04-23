@@ -2,14 +2,13 @@ package com.example.techecommerceserver.controller;
 
 
 import com.example.techecommerceserver.dto.CurrentCustomerDTO;
+import com.example.techecommerceserver.dto.LoginDTO;
 import com.example.techecommerceserver.dto.LoginFacebookDTO;
 import com.example.techecommerceserver.dto.RegisterDTO;
 import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.LoginException;
 import com.example.techecommerceserver.exception.SessionLoginException;
-import com.example.techecommerceserver.model.CurrentUserSession;
 import com.example.techecommerceserver.model.Customer;
-import com.example.techecommerceserver.dto.LoginDTO;
 import com.example.techecommerceserver.repository.CustomerRepo;
 import com.example.techecommerceserver.response.LoginResponse;
 import com.example.techecommerceserver.service.CustomerService;

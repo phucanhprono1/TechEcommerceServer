@@ -45,17 +45,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getById(Integer id) throws CategoryException{
-        Category p = categoryRepo.findById(id).orElseThrow(() -> new CategoryException("Category not found"));
-        return p;
-    }
-
-    @Override
-    public long countCategory() throws CategoryException {
-        return categoryRepo.count();
-    }
-
-    @Override
     public Category removeCategory(Integer categoryId) throws CategoryException {
         Category p = categoryRepo.findById(categoryId).orElseThrow(() -> new CategoryException("Category not found"));
         categoryRepo.delete(p);

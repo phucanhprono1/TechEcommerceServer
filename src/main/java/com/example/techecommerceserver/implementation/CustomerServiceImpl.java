@@ -71,9 +71,4 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer findCustomerByUsername(String customerUsername) throws CustomerException {
 		return null;
 	}
-
-	@Override
-	public long countCustomer() throws CustomerException {
-		return cRepo.count();
-	}
 }

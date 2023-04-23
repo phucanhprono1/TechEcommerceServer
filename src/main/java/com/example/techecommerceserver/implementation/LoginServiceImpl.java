@@ -1,13 +1,13 @@
 package com.example.techecommerceserver.implementation;
 
 
+import com.example.techecommerceserver.dto.LoginDTO;
 import com.example.techecommerceserver.dto.LoginFacebookDTO;
 import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.LoginException;
 import com.example.techecommerceserver.model.Admin;
 import com.example.techecommerceserver.model.CurrentUserSession;
 import com.example.techecommerceserver.model.Customer;
-import com.example.techecommerceserver.dto.LoginDTO;
 import com.example.techecommerceserver.repository.AdminRepo;
 import com.example.techecommerceserver.repository.CurrentUserSessionRepo;
 import com.example.techecommerceserver.repository.CustomerRepo;
@@ -17,6 +17,7 @@ import com.example.techecommerceserver.service.LoginService;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 
 @Service
@@ -59,7 +60,7 @@ public class LoginServiceImpl implements LoginService {
 				currentUserSession.setPrivateKey(privateKey);
 
 				sessionRepo.save(currentUserSession);
-				LoginResponse lr = new LoginResponse("Login Successfully!",customer.getCId(),loginDTO.getUsername(),"customer",privateKey);
+				LoginResponse lr = new LoginResponse("Login Successfully!",loginDTO.getUsername(),"customer",privateKey);
 				return lr;
 			} else {
 				throw new LoginException("Please Enter a valid password");
@@ -83,7 +84,7 @@ public class LoginServiceImpl implements LoginService {
 				currentUserSession.setRole("admin");
 				String privateKey = RandomString.make(10);
 				currentUserSession.setPrivateKey(privateKey);
-				LoginResponse lr = new LoginResponse("Login Successfully!",admin.getAdminId(),loginDTO.getUsername(),"admin",privateKey);
+				LoginResponse lr = new LoginResponse("Login Successfully!",loginDTO.getUsername(),"admin",privateKey);
 				sessionRepo.save(currentUserSession);
 				return lr;
 			} else {
@@ -126,7 +127,7 @@ public class LoginServiceImpl implements LoginService {
 					currentUserSession.setPrivateKey(privateKey);
 
 					sessionRepo.save(currentUserSession);
-					LoginResponse lr = new LoginResponse("Login Successfully!",customer.getCId(),loginDTO.getUsername(),"customer",privateKey);
+					LoginResponse lr = new LoginResponse("Login Successfully!",loginDTO.getUsername(),"customer",privateKey);
 					return lr;
 				} else {
 					throw new LoginException("Please Enter a valid password");

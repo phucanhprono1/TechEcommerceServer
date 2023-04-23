@@ -13,6 +13,6 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
     long countEnd();
     @Query(nativeQuery = true, value = "SELECT * FROM product order by number_sell desc limit 5;")
     List<Product> topSell();
-
-
+    @Query("SELECT p FROM Product p WHERE p.productName LIKE %:keyword% OR p.description like %:keyword% OR p.manufacturer like %:keyword%")
+    List<Product> search(String keyword);
 }

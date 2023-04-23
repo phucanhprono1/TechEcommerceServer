@@ -1,6 +1,7 @@
 package com.example.techecommerceserver.controller;
 
 import com.example.techecommerceserver.dto.ProductDto;
+import com.example.techecommerceserver.dto.SearchDto;
 import com.example.techecommerceserver.exception.ProductException;
 import com.example.techecommerceserver.model.Product;
 import com.example.techecommerceserver.service.ProductService;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -64,6 +66,10 @@ public class ProductController {
 	@GetMapping("/topSell")
 	public ResponseEntity<List<Product>> getTopSell() throws IllegalArgumentException {
 		return new ResponseEntity<List<Product>>(pService.viewTopSell(), HttpStatus.OK);
+	}
+	@PostMapping("/search")
+	public List<Product> updateProduct(@RequestBody SearchDto searchDto) throws ProductException {
+		return pService.search(searchDto.getContent());
 	}
 
 }

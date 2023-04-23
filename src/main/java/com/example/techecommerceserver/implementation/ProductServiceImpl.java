@@ -104,6 +104,11 @@ public class ProductServiceImpl implements ProductService {
 		return pRepo.topSell();
 	}
 
+	@Override
+	public List<Product> search(String s) throws ProductException {
+		return pRepo.search(s);
+	}
+
 	private Product mapFromDtoToProduct(ProductDto productDto, Product product) {
 		product.setProductName(productDto.getProductName());
 		product.setImage(productDto.getImage());

@@ -68,6 +68,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setDate(LocalDateTime.now());
 		order.setOrderStatus("Pending");
 		order.setAddress(c.getAddress());
+		order.setCustomer(c);
 //
 		float k = 0;
 		List<OrderItem> orderItems = new ArrayList<>();

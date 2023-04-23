@@ -67,7 +67,11 @@ public class CartServiceImpl implements CartService {
 				cartItemRepo.save(cit);
 			}
 			cartItems.add(cit);
-			cart.setProduct_quantity(cart.getProduct_quantity()+quantity);
+			if (cart.getProduct_quantity() == null) {
+				cart.setProduct_quantity(quantity);
+			} else {
+				cart.setProduct_quantity(cart.getProduct_quantity()+quantity);
+			}
 		}
 		cart.setCartItems(cartItems);
 

@@ -4,6 +4,7 @@ import com.example.techecommerceserver.exception.CartException;
 import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.ProductException;
 import com.example.techecommerceserver.model.Cart;
+import com.example.techecommerceserver.model.CartItem;
 import com.example.techecommerceserver.repository.CartRepo;
 import com.example.techecommerceserver.repository.CustomerRepo;
 import com.example.techecommerceserver.service.CartService;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/customer/cart")
@@ -30,9 +33,9 @@ public class CartController {
 	}
 
 	@GetMapping("/view/{customerId}")
-	public ResponseEntity<Cart> getCartByCustomerId(@PathVariable(value = "customerId") Integer customerId)
+	public ResponseEntity<List<CartItem>> getCartByCustomerId(@PathVariable(value = "customerId") Integer customerId)
 			throws CartException, CustomerException {
-		return new ResponseEntity<Cart>(customerRepo.findById(customerId).get().getCart(), HttpStatus.OK);
+		return new ResponseEntity<List<CartItem>>(customerRepo.findById(customerId).get().getCart().getCartItems(), HttpStatus.OK);
 	}
 	@DeleteMapping("/remove/{cartId}/{productId}")
 	public ResponseEntity<Cart> removeProductFromCart(@PathVariable("cartId") Integer cartId,

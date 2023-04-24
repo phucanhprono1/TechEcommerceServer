@@ -26,10 +26,13 @@ public class CustomerController {
 		return new ResponseEntity<Customer>(cService.addCustomer(c), HttpStatus.OK);
 	}
 
-	@PutMapping("/update")
-	public ResponseEntity<Customer> updateCustomer(@RequestBody Customer c) throws CustomerException {
-		return new ResponseEntity<Customer>(cService.updateCustomer(c), HttpStatus.OK);
+	@PutMapping("/update/{id}")
+	public Customer updateCustomer(@PathVariable Integer id, @RequestBody Customer c)
+			throws CustomerException {
+//		return new ResponseEntity<Customer>(cService.updateCustomer(c), HttpStatus.OK);
+		return cService.updateCustomer(id,c);
 	}
+
 
 	@DeleteMapping("/remove/{id}")
 	public ResponseEntity<Customer> removeCustomerById(@PathVariable("id") Integer customerId) throws CustomerException {
@@ -39,6 +42,10 @@ public class CustomerController {
 	@GetMapping("/view")
 	public ResponseEntity<List<Customer>> viewAllCustomer() throws CustomerException {
 		return new ResponseEntity<List<Customer>>(cService.viewAllCustomer(), HttpStatus.OK);
+	}
+	@GetMapping("/viewCustomer/{cId}")
+	public ResponseEntity<Customer> viewCustomerById(@PathVariable Integer cId) throws CustomerException {
+		return new ResponseEntity<Customer>(cService.viewCustomer(cId), HttpStatus.OK);
 	}
 	@GetMapping("/count")
 	public long countNumberCustomer() throws CustomerException {

@@ -36,10 +36,14 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer updateCustomer(Customer customer) throws CustomerException {
+	public Customer updateCustomer(Integer id, Customer customer) throws CustomerException {
 		Customer c = cRepo.findById(customer.getCId()).orElseThrow(() -> new CustomerException("Customer not found"));
+		c.setName(customer.getName());
+		c.setEmail(customer.getEmail());
+		c.setUsername(customer.getUsername());
+		c.setPhone_number(customer.getPhone_number());
 		if (c != null) {
-			cRepo.save(customer);
+			cRepo.save(c);
 		}
 		return c;
 	}
@@ -65,6 +69,13 @@ public class CustomerServiceImpl implements CustomerService {
 		} else {
 			throw new CustomerException("customer not found");
 		}
+	}
+
+	@Override
+	public Customer viewCustomer(Integer cId) throws CustomerException {
+		Customer opt = cRepo.findById(cId).orElseThrow(() -> new CustomerException("For id " + cId));
+		return opt;
+
 	}
 
 	@Override

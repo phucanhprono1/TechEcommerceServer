@@ -1,8 +1,11 @@
 package com.example.techecommerceserver.controller;
 
 import com.example.techecommerceserver.dto.CategoryDto;
+import com.example.techecommerceserver.dto.ProductDto;
 import com.example.techecommerceserver.exception.CategoryException;
+import com.example.techecommerceserver.exception.ProductException;
 import com.example.techecommerceserver.model.Category;
+import com.example.techecommerceserver.model.Product;
 import com.example.techecommerceserver.service.CategoryService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,10 @@ public class CategoryController {
     public ResponseEntity<List<Category>> getAllCategory() throws CategoryException {
         return new ResponseEntity<List<Category>>(categoryService.getAllCategory(), HttpStatus.OK);
     }
+    @GetMapping("/get/{id}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable Integer id) throws CategoryException{
+        return new ResponseEntity<Category>(categoryService.getById(id), HttpStatus.OK);
+    }
     @PostMapping("/add")
     public ResponseEntity<Category> addCategory(@RequestBody Category category) throws CategoryException {
         Category category1 = categoryService.addCategory(category);
@@ -39,5 +46,9 @@ public class CategoryController {
     public ResponseEntity<Category> removeCategoryById(@PathVariable Integer categoryId)
             throws CategoryException {
         return new ResponseEntity<Category>(categoryService.removeCategory(categoryId), HttpStatus.OK);
+    }
+    @GetMapping("/count")
+    public long countNumberCategory() throws CategoryException {
+        return categoryService.countCategory();
     }
 }

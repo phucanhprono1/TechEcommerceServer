@@ -1,5 +1,6 @@
 package com.example.techecommerceserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,8 +18,6 @@ public class Orders {
 
 	private LocalDateTime date;
 	private String orderStatus;
-	private String locations;
-	private String payment_method;
 
 	@Column(name="total_price")
 	private float total_price;
@@ -32,5 +31,6 @@ public class Orders {
 	private List<OrderItem> orderItems = new ArrayList<>();
 
 //	@JsonIgnore
-	//@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
+	private Address address;
 }

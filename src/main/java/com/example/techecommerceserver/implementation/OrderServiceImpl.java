@@ -1,5 +1,6 @@
 package com.example.techecommerceserver.implementation;
 
+import com.example.techecommerceserver.dto.OrderDTO;
 import com.example.techecommerceserver.exception.CartException;
 import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.OrderException;
@@ -36,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
 	private AddressRepo addressRepo;
 
 	@Override
-	public Orders addOrder(Integer cid, String locations, String payment_method) throws OrderException, CustomerException, CartException {
+	public Orders addOrder(Integer cid) throws OrderException, CustomerException, CartException {
 
 		Optional<Customer> opt = customerRepo.findById(cid);
 //		if (opt.isEmpty()) {
@@ -63,11 +64,10 @@ public class OrderServiceImpl implements OrderService {
 //			return oRepo.save(o);
 //		}
 		Orders order = new Orders();
-		order.setCustomer(c);
+
 		order.setDate(LocalDateTime.now());
 		order.setOrderStatus("Pending");
-		order.setLocations(locations);
-		order.setPayment_method(payment_method);
+		order.setAddress(c.getAddress());
 //
 		float k = 0;
 		List<OrderItem> orderItems = new ArrayList<>();
@@ -79,27 +79,46 @@ public class OrderServiceImpl implements OrderService {
 			orderItem.setOrder(order);
 			orderItems.add(orderItem);
 		}
-		order.setTotal_price(k);
 		order.setOrderItems(orderItems);
+
 		Orders savedOrder = oRepo.save(order);
 		cartService.removeAllProduct(c.getCId());
+
 		return savedOrder;
 	}
 
 	@Override
-	public Orders updateOrder(int id, String locations,String payment_method) throws OrderException {
-		Orders o = oRepo.findById(id).orElseThrow(() -> new OrderException("Order not found"));
-		//Optional<Customer> opt = customerRepo.findById(id);
-		o.setLocations(locations);
-		o.setPayment_method(payment_method);
-		return oRepo.save(o);
+	public OrderDTO updateOrder(Orders order) throws OrderException {
+//		Orders o = oRepo.findById(order.getOrderId()).orElseThrow(() -> new OrderException("Order not found"));
+//		Optional<Customer> opt = customerRepo.findById(order.getOrderId());
+//		Customer c = opt.get();
+//		order.setCustomer(c);
+//		Cart cart = c.getCart();
+//		o.setProductList(new ArrayList<>(cart.getProducts()));
+//		float k = 0;
+//		for(Product m :cart.getProducts()){
+//			k += m.getPrice();
+//		}
+//		o.setTotal_price(k);
+		OrderDTO a = new OrderDTO();
+//		if (o != null) {
+//			oRepo.save(order);
+//			a.setOrderId(order.getOrderId());
+//			a.setOrderStatus(order.getOrderStatus());
+//			a.setDate(order.getDate());
+//			a.setProductList(order.getProductList());
+//			a.setCustomer(order.getCustomer());
+//			a.setAddress(order.getAddress());
+//			a.setPrice(order.getTotal_price());
+//		}
+		return a;
 	}
 
 	@Override
-	public Orders viewOrder(Integer orderId) throws OrderException {
+	public OrderDTO viewOrder(Integer orderId) throws OrderException {
 		Optional<Orders> o = oRepo.findById(orderId);
 		if (o.isPresent()) {
-			//OrderDTO a = new OrderDTO();
+			OrderDTO a = new OrderDTO();
 //			a.setOrderId(o.get().getOrderId());
 //			a.setOrderStatus(o.get().getOrderStatus());
 //			a.setDate(o.get().getDate());
@@ -107,7 +126,7 @@ public class OrderServiceImpl implements OrderService {
 //			a.setCustomer(o.get().getCustomer());
 //			a.setAddress(o.get().getAddress());
 //			a.setPrice(o.get().getTotal_price());
-			return o.get();
+			return a;
 		} else {
 			throw new OrderException("order not present!!");
 		}
@@ -134,16 +153,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public Orders confirmOrder(Integer orderId){
-		Orders orders = oRepo.findById(orderId).get();
-		orders.setOrderStatus("Xác nhận");
-		return oRepo.save(orders);
+	public long countOrder() throws OrderException {
+		return oRepo.count();
 	}
 
-	@Override
-	public Orders cancelOrder(Integer orderId){
-		Orders orders = oRepo.findById(orderId).get();
-		orders.setOrderStatus("Đã hủy");
-		return oRepo.save(orders);
-	}
 }

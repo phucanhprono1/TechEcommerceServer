@@ -1,9 +1,9 @@
 package com.example.techecommerceserver.service;
 
 
-import com.example.techecommerceserver.dto.LoginDTO;
 import com.example.techecommerceserver.dto.LoginFacebookDTO;
 import com.example.techecommerceserver.exception.LoginException;
+import com.example.techecommerceserver.dto.LoginDTO;
 import com.example.techecommerceserver.response.LoginResponse;
 
 public interface LoginService {

@@ -21,7 +21,7 @@ public class Product {
 	private String image;
 	private String size;
 	private String manufacturer;
-	private int availability;
+	private int quantity;
 	private int numberSell;
 
 	@ManyToOne(cascade = CascadeType.MERGE)

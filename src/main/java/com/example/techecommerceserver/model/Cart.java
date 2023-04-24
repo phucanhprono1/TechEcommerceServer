@@ -15,7 +15,7 @@ public class Cart {
 	@Column(name = "cart_id")
 	private Integer cartId;
 	private Integer product_quantity;
-
+	private float total_price;
 	@OneToMany( cascade = CascadeType.ALL)
 	private List<CartItem> cartItems = new ArrayList<>();
 

@@ -15,9 +15,8 @@ public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer addressId;
-	private String streetNo;
-	private String buildingName;
+	private String address;
 	private String city;
-	private String pincode;
+
 
 }

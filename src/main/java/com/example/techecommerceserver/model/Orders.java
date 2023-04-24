@@ -18,12 +18,12 @@ public class Orders {
 
 	private LocalDateTime date;
 	private String orderStatus;
-
+	private String location;
 	@Column(name="total_price")
 	private float total_price;
 
 
-//	@JsonIgnore
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Customer customer;
 

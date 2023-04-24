@@ -80,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
 			orderItems.add(orderItem);
 		}
 		order.setOrderItems(orderItems);
-
+		order.setTotal_price(k);
 		Orders savedOrder = oRepo.save(order);
 		cartService.removeAllProduct(c.getCId());
 

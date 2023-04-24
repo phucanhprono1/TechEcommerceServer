@@ -72,7 +72,11 @@ public class CartServiceImpl implements CartService {
 			cartItems.add(cit);
 		}
 		cart.setCartItems(cartItems);
-
+		float total = 0;
+		for(CartItem c:cartItems) {
+			total+=c.getProduct().getPrice()*c.getQuantity();
+		}
+		cart.setTotal_price(total);
 		cRepo.save(cart);
 		return cart;
 
@@ -105,6 +109,11 @@ public class CartServiceImpl implements CartService {
 			throw new CartException("Product not removed from cart");
 		}
 		cart.setCartItems(itemList);
+		float total = 0;
+		for(CartItem c:itemList) {
+			total+=c.getProduct().getPrice()*c.getQuantity();
+		}
+		cart.setTotal_price(total);
 		cRepo.save(cart);
 		return cart;
 
@@ -120,6 +129,11 @@ public class CartServiceImpl implements CartService {
 			throw new CartException("cart not found");
 		}
 		c.getCartItems().clear();
+		float total = 0;
+		for(CartItem ca: c.getCartItems()) {
+			total+=ca.getProduct().getPrice()*ca.getQuantity();
+		}
+		c.setTotal_price(total);
 		return cRepo.save(c);
 
 	}
@@ -150,7 +164,11 @@ public class CartServiceImpl implements CartService {
 		if (flag) {
 			throw new CartException("Product not found in cart");
 		}
-
+		float total = 0;
+		for(CartItem c:itemList) {
+			total+=c.getProduct().getPrice()*c.getQuantity();
+		}
+		cart.setTotal_price(total);
 		cRepo.save(cart);
 		return cart;
 
@@ -188,7 +206,11 @@ public class CartServiceImpl implements CartService {
 		if (flag) {
 			throw new CartException("Product not found in cart");
 		}
-
+		float total = 0;
+		for(CartItem c:itemList) {
+			total+=c.getProduct().getPrice()*c.getQuantity();
+		}
+		cart.setTotal_price(total);
 		cRepo.save(cart);
 		return cart;
 	}

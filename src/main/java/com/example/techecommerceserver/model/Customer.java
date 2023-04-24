@@ -24,7 +24,7 @@ public class Customer {
 	private String phone_number;
 	@Column(unique = false, name = "email")
 	private String email;
-	private String password;	
+	private String password;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;

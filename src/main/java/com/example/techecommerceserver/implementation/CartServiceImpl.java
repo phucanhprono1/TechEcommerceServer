@@ -62,6 +62,12 @@ public class CartServiceImpl implements CartService {
 			CartItem cit = new CartItem();
 			cit.setProduct(itemOpt.get());
 			cit.setQuantity(quantity);
+			if(cart.getProduct_quantity()==null) {
+				cart.setProduct_quantity(quantity);
+			}
+			else {
+				cart.setProduct_quantity(cart.getProduct_quantity()+quantity);
+			}
 			cartItemRepo.save(cit);
 			cartItems.add(cit);
 		}
@@ -89,6 +95,7 @@ public class CartServiceImpl implements CartService {
 		for (int i = 0; i < itemList.size(); i++) {
 			CartItem element = itemList.get(i);
 			if (element.getProduct().getProductId() == productId) {
+				cart.setProduct_quantity(cart.getProduct_quantity()-element.getQuantity());
 				itemList.remove(element);
 				flag = true;
 				break;
@@ -170,6 +177,9 @@ public class CartServiceImpl implements CartService {
 				if (element.getProduct().getProductId() == productId) {
 					cart.setProduct_quantity(cart.getProduct_quantity() - 1);
 					cart.getCartItems().get(i).setQuantity(element.getQuantity() - 1);
+					if(cart.getCartItems().get(i).getQuantity() == 0) {
+						itemList.remove(element);
+					}
 					flag = false;
 				}
 			}
@@ -178,6 +188,7 @@ public class CartServiceImpl implements CartService {
 		if (flag) {
 			throw new CartException("Product not found in cart");
 		}
+
 		cRepo.save(cart);
 		return cart;
 	}

@@ -71,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setCustomer(c);
 		order.setDate(LocalDateTime.now());
 		order.setOrderStatus("Pending");
-		order.setAddress(c.getAddress());
+//		order.setAddress(c.getAddress());
 		order.setLocation(orderRequest.getLocation());
 //
 

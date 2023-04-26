@@ -33,7 +33,6 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private CustomerRepo customerRepo;
 
-
 	@Autowired
 	private AddressRepo addressRepo;
 
@@ -47,6 +46,7 @@ public class OrderServiceImpl implements OrderService {
 //
 		Customer c = opt.get();
 		c.setAddress(orderRequest.getAddress());
+		customerRepo.save(c);
 		addressRepo.save(c.getAddress());
 		Cart cart = c.getCart();
 //		Orders o = new Orders();
@@ -92,47 +92,50 @@ public class OrderServiceImpl implements OrderService {
 
 		return savedOrder;
 	}
-
 	@Override
-	public OrderDTO updateOrder(Orders order) throws OrderException {
-//		Orders o = oRepo.findById(order.getOrderId()).orElseThrow(() -> new OrderException("Order not found"));
-//		Optional<Customer> opt = customerRepo.findById(order.getOrderId());
-//		Customer c = opt.get();
-//		order.setCustomer(c);
-//		Cart cart = c.getCart();
-//		o.setProductList(new ArrayList<>(cart.getProducts()));
-//		float k = 0;
-//		for(Product m :cart.getProducts()){
-//			k += m.getPrice();
-//		}
-//		o.setTotal_price(k);
-		OrderDTO a = new OrderDTO();
-//		if (o != null) {
-//			oRepo.save(order);
-//			a.setOrderId(order.getOrderId());
-//			a.setOrderStatus(order.getOrderStatus());
-//			a.setDate(order.getDate());
-//			a.setProductList(order.getProductList());
-//			a.setCustomer(order.getCustomer());
-//			a.setAddress(order.getAddress());
-//			a.setPrice(order.getTotal_price());
-//		}
-		return a;
+	public Orders updateOrder(int id, String locations,String payment_method) throws OrderException {
+		Orders k = oRepo.findById(id).orElseThrow(() -> new OrderException("Order not found"));
+		//Optional<Customer> opt = customerRepo.findById(id);
+		/*java.util.Date now = new java.util.Date();
+		Timestamp timestamp = new Timestamp(now.getTime());*/
+		k.setDate(LocalDateTime.now());
+		k.setLocation(locations);
+		k.setPaymentMethod(payment_method);
+
+		return oRepo.save(k);
+
+		/*OrderDTO a = new OrderDTO();
+		a.setOrderId(o.getOrderId());
+		a.setOrderStatus(o.getOrderStatus());
+		java.util.Date last = new Date(o.getDate().getTime());
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String strDate = dateFormat.format(last);
+		a.setDate(strDate);
+		a.setOrderItems(o.getOrderItems());
+		a.setLocations(o.getLocations());
+		a.setPayment_method(o.getPayment_method());
+		a.setTotal_price(o.getTotal_price());
+		a.setCustomer(o.getCustomer());
+		return a;*/
 	}
-
 	@Override
-	public OrderDTO viewOrder(Integer orderId) throws OrderException {
+	public Orders viewOrder(Integer orderId) throws OrderException {
 		Optional<Orders> o = oRepo.findById(orderId);
 		if (o.isPresent()) {
-			OrderDTO a = new OrderDTO();
-//			a.setOrderId(o.get().getOrderId());
-//			a.setOrderStatus(o.get().getOrderStatus());
-//			a.setDate(o.get().getDate());
-//			a.setProductList(o.get().getProductList());
-//			a.setCustomer(o.get().getCustomer());
-//			a.setAddress(o.get().getAddress());
-//			a.setPrice(o.get().getTotal_price());
-			return a;
+			/*OrderDTO a = new OrderDTO();
+			a.setOrderId(o.get().getOrderId());
+			a.setOrderStatus(o.get().getOrderStatus());
+			java.util.Date last = new Date(o.get().getDate().getTime());
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			String strDate = dateFormat.format(last);
+			a.setDate(strDate);
+			a.setOrderItems(o.get().getOrderItems());
+			a.setLocations(o.get().getLocations());
+			a.setPayment_method(o.get().getPayment_method());
+			a.setTotal_price(o.get().getTotal_price());
+			a.setCustomer(o.get().getCustomer());
+			return a;*/
+			return o.get();
 		} else {
 			throw new OrderException("order not present!!");
 		}
@@ -141,7 +144,23 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<Orders> viewAllOrder() throws OrderException {
 		List<Orders> orders = oRepo.findAll();
+		/*List<OrderDTO> orderDTOS = new ArrayList<>();*/
 		if (orders.size() > 0) {
+			/*for(Orders o: orders){
+				OrderDTO a = new OrderDTO();
+				a.setOrderId(o.getOrderId());
+				a.setOrderStatus(o.getOrderStatus());
+				java.util.Date last = new Date(o.getDate().getTime());
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				String strDate = dateFormat.format(last);
+				a.setDate(strDate);
+				a.setOrderItems(o.getOrderItems());
+				a.setLocations(o.getLocations());
+				a.setPayment_method(o.getPayment_method());
+				a.setTotal_price(o.getTotal_price());
+				a.setCustomer(o.getCustomer());
+				orderDTOS.add(a);
+			}*/
 			return orders;
 		} else {
 			throw new OrderException("Order not found");
@@ -151,11 +170,68 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<Orders> viewAllOrdersByUserId(Integer uderId) throws OrderException {
 		List<Orders> orders = customerRepo.getAllOrderByCid(uderId);
+		/*List<OrderDTO> orderDTOS = new ArrayList<>();*/
 		if (orders.size() > 0) {
+			/*for(Orders o: orders){
+				OrderDTO a = new OrderDTO();
+				a.setOrderId(o.getOrderId());
+				a.setOrderStatus(o.getOrderStatus());
+				java.util.Date last = new Date(o.getDate().getTime());
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				String strDate = dateFormat.format(last);
+				a.setDate(strDate);
+				a.setOrderItems(o.getOrderItems());
+				a.setLocations(o.getLocations());
+				a.setPayment_method(o.getPayment_method());
+				a.setTotal_price(o.getTotal_price());
+				a.setCustomer(o.getCustomer());
+				orderDTOS.add(a);
+			}*/
 			return orders;
 		} else {
 			throw new OrderException("Order not found");
 		}
+	}
+
+	@Override
+	public Orders confirmOrder(Integer orderId){
+		Orders orders = oRepo.findById(orderId).get();
+		orders.setOrderStatus("Xác nhận");
+		return oRepo.save(orders);
+		/*OrderDTO a = new OrderDTO();
+		a.setOrderId(o.getOrderId());
+		a.setOrderStatus(o.getOrderStatus());
+		java.util.Date last = new Date(o.getDate().getTime());
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String strDate = dateFormat.format(last);
+		a.setDate(strDate);
+		a.setOrderItems(o.getOrderItems());
+		a.setLocations(o.getLocations());
+		a.setPayment_method(o.getPayment_method());
+		a.setTotal_price(o.getTotal_price());
+		a.setCustomer(o.getCustomer());
+		return a;*/
+	}
+
+	@Override
+	public Orders cancelOrder(Integer orderId){
+		Orders orders = oRepo.findById(orderId).get();
+		orders.setOrderStatus("Đã hủy");
+		return oRepo.save(orders);
+
+		/*OrderDTO a = new OrderDTO();
+		a.setOrderId(o.getOrderId());
+		a.setOrderStatus(o.getOrderStatus());
+		java.util.Date last = new Date(o.getDate().getTime());
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String strDate = dateFormat.format(last);
+		a.setDate(strDate);
+		a.setOrderItems(o.getOrderItems());
+		a.setLocations(o.getLocations());
+		a.setPayment_method(o.getPayment_method());
+		a.setTotal_price(o.getTotal_price());
+		a.setCustomer(o.getCustomer());
+		return a;*/
 	}
 
 	@Override

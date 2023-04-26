@@ -26,20 +26,22 @@ public class OrderController {
 	@Autowired
 	private OrderService oService;
 
-	@PostMapping("/add")
-	public ResponseEntity<Orders> addOrder(@RequestParam("customerId") Integer customerId, @RequestBody OrderRequest orderRequest)
+	@PostMapping("/add/{customerId}")
+	public ResponseEntity<Orders> addOrder(@PathVariable("customerId") Integer customerId, @RequestBody OrderRequest orderRequest)
 			throws OrderException, CustomerException, CartException {
 		return new ResponseEntity<Orders>(oService.addOrder(customerId,orderRequest), HttpStatus.CREATED);
 	}
 
-	@PutMapping("/update")
-	public ResponseEntity<OrderDTO> updateOrder(@RequestBody Orders order) throws OrderException {
-		return new ResponseEntity<OrderDTO>(oService.updateOrder(order), HttpStatus.OK);
+	@PutMapping("/update/{orderId}/{locations}/{payment_method}")
+	public ResponseEntity<Orders> updateOrder(@PathVariable("orderId") int orderId,
+											  @PathVariable("locations") String locations,
+											  @PathVariable("payment_method") String payment_method) throws OrderException {
+		return new ResponseEntity<Orders>(oService.updateOrder(orderId, locations, payment_method), HttpStatus.OK);
 	}
 
 	@GetMapping("/view/{id}")
-	public ResponseEntity<OrderDTO> viewOrderById(@PathVariable("id") Integer orderId) throws OrderException {
-		return new ResponseEntity<OrderDTO>(oService.viewOrder(orderId), HttpStatus.OK);
+	public ResponseEntity<Orders> viewOrderById(@PathVariable("id") Integer orderId) throws OrderException {
+		return new ResponseEntity<Orders>(oService.viewOrder(orderId), HttpStatus.OK);
 	}
 
 	@GetMapping("/view")
@@ -52,9 +54,21 @@ public class OrderController {
 			throws OrderException {
 		return new ResponseEntity<List<Orders>>(oService.viewAllOrdersByUserId(userId), HttpStatus.OK);
 	}*/
-	@GetMapping("/count")
-	public long countNumberOrder() throws OrderException {
-		return oService.countOrder();
+
+	@GetMapping("/viewOrderByUser/{userId}")
+	public ResponseEntity<List<Orders>> viewOrderByUserId(@PathVariable("userId") Integer userId)
+			throws OrderException {
+		return new ResponseEntity<List<Orders>>(oService.viewAllOrdersByUserId(userId), HttpStatus.OK);
+	}
+
+	@PostMapping("/confirm/{orderId}")
+	public ResponseEntity<Orders> confirmOrder(@PathVariable("orderId") Integer orderId) {
+		return new ResponseEntity<Orders>(oService.confirmOrder(orderId), HttpStatus.OK);
+	}
+
+	@PostMapping("/cancel/{orderId}")
+	public ResponseEntity<Orders> cancelOrder(@PathVariable("orderId") Integer orderId) {
+		return new ResponseEntity<Orders>(oService.cancelOrder(orderId), HttpStatus.OK);
 	}
 
 }

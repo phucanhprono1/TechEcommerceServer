@@ -13,7 +13,7 @@ import java.util.List;
 public class Orders {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer orderId;
 
 	private LocalDateTime date;
@@ -22,7 +22,7 @@ public class Orders {
 	@Column(name="total_price")
 	private float total_price;
 
-
+	private String paymentMethod;
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Customer customer;

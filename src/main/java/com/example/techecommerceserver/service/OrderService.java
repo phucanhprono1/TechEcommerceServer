@@ -14,13 +14,17 @@ public interface OrderService {
 
 	public Orders addOrder(Integer cid, OrderRequest orderRequest) throws OrderException, CustomerException, CartException;
 
-	public OrderDTO updateOrder(Orders order) throws OrderException;
+	public Orders updateOrder(int id, String locations,String payment_method) throws OrderException;
 
-	public OrderDTO viewOrder(Integer orderId) throws OrderException;
+	public Orders viewOrder(Integer orderId) throws OrderException;
 
 	public List<Orders> viewAllOrder() throws OrderException;
 
 	public List<Orders> viewAllOrdersByUserId(Integer userId) throws OrderException;
+
+	public Orders confirmOrder(Integer orderId);
+
+	public Orders cancelOrder(Integer orderId);
 
 	long countOrder() throws OrderException;
 }

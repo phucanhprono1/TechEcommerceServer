@@ -1,6 +1,7 @@
 package com.example.techecommerceserver.controller;
 
 
+import com.example.techecommerceserver.dto.OrderRequest;
 import com.example.techecommerceserver.exception.CartException;
 import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.OrderException;
@@ -26,9 +27,9 @@ public class OrderController {
 	private OrderService oService;
 
 	@PostMapping("/add")
-	public ResponseEntity<Orders> addOrder(@RequestParam("customerId") Integer customerId)
+	public ResponseEntity<Orders> addOrder(@RequestParam("customerId") Integer customerId, @RequestBody OrderRequest orderRequest)
 			throws OrderException, CustomerException, CartException {
-		return new ResponseEntity<Orders>(oService.addOrder(customerId), HttpStatus.CREATED);
+		return new ResponseEntity<Orders>(oService.addOrder(customerId,orderRequest), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update")

@@ -1,6 +1,7 @@
 package com.example.techecommerceserver.implementation;
 
 import com.example.techecommerceserver.dto.OrderDTO;
+import com.example.techecommerceserver.dto.OrderRequest;
 import com.example.techecommerceserver.exception.CartException;
 import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.OrderException;
@@ -37,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
 	private AddressRepo addressRepo;
 
 	@Override
-	public Orders addOrder(Integer cid) throws OrderException, CustomerException, CartException {
+	public Orders addOrder(Integer cid, OrderRequest orderRequest) throws OrderException, CustomerException, CartException {
 
 		Optional<Customer> opt = customerRepo.findById(cid);
 //		if (opt.isEmpty()) {
@@ -45,6 +46,8 @@ public class OrderServiceImpl implements OrderService {
 //		}
 //
 		Customer c = opt.get();
+		c.setAddress(orderRequest.getAddress());
+		addressRepo.save(c.getAddress());
 		Cart cart = c.getCart();
 //		Orders o = new Orders();
 //
@@ -65,9 +68,11 @@ public class OrderServiceImpl implements OrderService {
 //		}
 		Orders order = new Orders();
 
+		order.setCustomer(c);
 		order.setDate(LocalDateTime.now());
 		order.setOrderStatus("Pending");
 		order.setAddress(c.getAddress());
+		order.setLocation(orderRequest.getLocation());
 //
 		float k = 0;
 		List<OrderItem> orderItems = new ArrayList<>();

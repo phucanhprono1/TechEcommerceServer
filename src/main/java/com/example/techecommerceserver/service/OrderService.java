@@ -1,6 +1,7 @@
 package com.example.techecommerceserver.service;
 
 
+import com.example.techecommerceserver.dto.OrderRequest;
 import com.example.techecommerceserver.exception.CartException;
 import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.OrderException;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public interface OrderService {
 
-	public Orders addOrder(Integer cid) throws OrderException, CustomerException, CartException;
+	public Orders addOrder(Integer cid, OrderRequest orderRequest) throws OrderException, CustomerException, CartException;
 
 	public OrderDTO updateOrder(Orders order) throws OrderException;
 

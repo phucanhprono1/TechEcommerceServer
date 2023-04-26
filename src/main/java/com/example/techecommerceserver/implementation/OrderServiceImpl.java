@@ -74,19 +74,20 @@ public class OrderServiceImpl implements OrderService {
 		order.setAddress(c.getAddress());
 		order.setLocation(orderRequest.getLocation());
 //
-		float k = 0;
+
 		List<OrderItem> orderItems = new ArrayList<>();
 		for (CartItem cartItem : cart.getCartItems()) {
 			OrderItem orderItem = new OrderItem();
 			orderItem.setProduct(cartItem.getProduct());
 			orderItem.setQuantity(cartItem.getQuantity());
-			k+=cartItem.getProduct().getPrice()*cartItem.getQuantity();
+
 			orderItem.setOrder(order);
 			orderItems.add(orderItem);
 		}
 		order.setOrderItems(orderItems);
-		order.setTotal_price(k);
+		order.setTotal_price(cart.getTotal_price());
 		Orders savedOrder = oRepo.save(order);
+		//xóa cart của customer sau khi order
 		cartService.removeAllProduct(c.getCId());
 
 		return savedOrder;

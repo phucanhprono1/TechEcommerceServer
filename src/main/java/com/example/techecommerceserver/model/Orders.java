@@ -27,7 +27,7 @@ public class Orders {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Customer customer;
 
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = false)
 	private List<OrderItem> orderItems = new ArrayList<>();
 
 //	@JsonIgnore

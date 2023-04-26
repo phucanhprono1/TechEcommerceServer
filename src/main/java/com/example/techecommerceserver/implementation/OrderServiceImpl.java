@@ -6,10 +6,7 @@ import com.example.techecommerceserver.exception.CartException;
 import com.example.techecommerceserver.exception.CustomerException;
 import com.example.techecommerceserver.exception.OrderException;
 import com.example.techecommerceserver.model.*;
-import com.example.techecommerceserver.repository.AddressRepo;
-import com.example.techecommerceserver.repository.CartRepo;
-import com.example.techecommerceserver.repository.CustomerRepo;
-import com.example.techecommerceserver.repository.OrderRepo;
+import com.example.techecommerceserver.repository.*;
 import com.example.techecommerceserver.service.CartService;
 import com.example.techecommerceserver.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private AddressRepo addressRepo;
+	@Autowired
+	private OrderItemRepo orderItemRepo;
 
 	@Override
 	public Orders addOrder(Integer cid, OrderRequest orderRequest) throws OrderException, CustomerException, CartException {
@@ -46,35 +45,19 @@ public class OrderServiceImpl implements OrderService {
 //
 		Customer c = opt.get();
 		c.setAddress(orderRequest.getAddress());
-		customerRepo.save(c);
+
 		addressRepo.save(c.getAddress());
 		Cart cart = c.getCart();
-//		Orders o = new Orders();
-//
-//		o.setDate(LocalDateTime.now());
-//		o.setOrderStatus("Pending");
-//		o.setAddress(c.getAddress());
-//		o.setCustomer(c);
-//		if (cart.getCartItems().isEmpty()) {
-//			throw new CartException("add minimum one product to order!");
-//		} else {
-//			o.getOrderItems().addAll(cart.getCartItems());
-//			float k = 0;
-//			for(Product m :cart.getProducts()){
-//				k += m.getPrice();
-//			}
-//			o.setTotal_price(k);
-//			return oRepo.save(o);
-//		}
+
 		Orders order = new Orders();
 
 		order.setCustomer(c);
 		order.setDate(LocalDateTime.now());
 		order.setOrderStatus("Pending");
-//		order.setAddress(c.getAddress());
+
 		order.setLocation(orderRequest.getLocation());
 //
-
+		order.setPaymentMethod(orderRequest.getPaymentMethod());
 		List<OrderItem> orderItems = new ArrayList<>();
 		for (CartItem cartItem : cart.getCartItems()) {
 			OrderItem orderItem = new OrderItem();
@@ -83,6 +66,7 @@ public class OrderServiceImpl implements OrderService {
 
 //			orderItem.setOrder(order);
 			orderItems.add(orderItem);
+			orderItemRepo.save(orderItem);
 		}
 		order.setOrderItems(orderItems);
 		order.setTotal_price(cart.getTotal_price());

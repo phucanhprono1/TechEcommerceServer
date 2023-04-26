@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
+@Embeddable
 @AllArgsConstructor
 public class OrderItem {
     @Id

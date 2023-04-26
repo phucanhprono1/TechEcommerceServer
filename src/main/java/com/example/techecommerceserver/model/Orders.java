@@ -23,14 +23,13 @@ public class Orders {
 	private float total_price;
 
 	private String paymentMethod;
-	@JsonIgnore
+
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Customer customer;
 
-	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = false)
+	@Embedded
+	@ElementCollection
 	private List<OrderItem> orderItems = new ArrayList<>();
 
-//	@JsonIgnore
-	@OneToOne(cascade = CascadeType.ALL)
-	private Address address;
 }

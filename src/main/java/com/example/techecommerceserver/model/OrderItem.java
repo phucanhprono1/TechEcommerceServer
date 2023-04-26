@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-@Embeddable
+
 @AllArgsConstructor
 public class OrderItem {
     @Id
@@ -21,4 +21,6 @@ public class OrderItem {
     private Integer quantity;
 
     private double price;
+    @ManyToOne
+    private Orders orders;
 }

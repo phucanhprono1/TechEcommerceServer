@@ -28,8 +28,7 @@ public class Orders {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Customer customer;
 
-	@Embedded
-	@ElementCollection
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<OrderItem> orderItems = new ArrayList<>();
 
 }

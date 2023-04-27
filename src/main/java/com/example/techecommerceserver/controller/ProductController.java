@@ -67,9 +67,9 @@ public class ProductController {
 	public ResponseEntity<List<Product>> getTopSell() throws IllegalArgumentException {
 		return new ResponseEntity<List<Product>>(pService.viewTopSell(), HttpStatus.OK);
 	}
-	@PostMapping("/search")
-	public List<Product> updateProduct(@RequestBody SearchDto searchDto) throws ProductException {
-		return pService.search(searchDto.getContent());
+	@PostMapping("/search/{content}")
+	public List<Product> searchProduct(@PathVariable String content) throws ProductException {
+		return pService.search(content);
 	}
 
 }

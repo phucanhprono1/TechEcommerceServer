@@ -34,6 +34,8 @@ public class OrderServiceImpl implements OrderService {
 	private AddressRepo addressRepo;
 	@Autowired
 	private OrderItemRepo orderItemRepo;
+	@Autowired
+	private ProductRepo productRepo;
 
 	@Override
 	public Orders addOrder(Integer cid, OrderRequest orderRequest) throws OrderException, CustomerException, CartException {
@@ -63,7 +65,10 @@ public class OrderServiceImpl implements OrderService {
 			OrderItem orderItem = new OrderItem();
 			orderItem.setProduct(cartItem.getProduct());
 			orderItem.setQuantity(cartItem.getQuantity());
-
+			Product p = cartItem.getProduct();
+			p.setQuantity(p.getQuantity() - cartItem.getQuantity());
+			p.setNumberSell(p.getNumberSell() + cartItem.getQuantity());
+			productRepo.save(p);
 //			orderItem.setOrder(order);
 			orderItems.add(orderItem);
 			orderItemRepo.save(orderItem);

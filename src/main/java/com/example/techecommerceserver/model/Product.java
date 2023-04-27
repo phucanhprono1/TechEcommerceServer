@@ -1,9 +1,11 @@
 package com.example.techecommerceserver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Embeddable
@@ -27,7 +29,9 @@ public class Product {
 	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "category_id")
 	private Category category;
-
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "product")
+	private List<Comment> commentList;
 
 	public Product() {
 

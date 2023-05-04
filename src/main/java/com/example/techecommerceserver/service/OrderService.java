@@ -14,7 +14,7 @@ public interface OrderService {
 
 	public Orders addOrder(Integer cid, OrderRequest orderRequest) throws OrderException, CustomerException, CartException;
 
-	public Orders updateOrder(int id, String locations,String payment_method) throws OrderException;
+	public Orders updateOrder(int id, String locations,String payment_method, String orderStatus) throws OrderException;
 
 	public Orders viewOrder(Integer orderId) throws OrderException;
 

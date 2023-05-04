@@ -32,11 +32,12 @@ public class OrderController {
 		return new ResponseEntity<Orders>(oService.addOrder(customerId,orderRequest), HttpStatus.CREATED);
 	}
 
-	@PutMapping("/update/{orderId}/{locations}/{payment_method}")
+	@PutMapping("/update/{orderId}/{locations}/{payment_method}/{orderStatus}")
 	public ResponseEntity<Orders> updateOrder(@PathVariable("orderId") int orderId,
 											  @PathVariable("locations") String locations,
-											  @PathVariable("payment_method") String payment_method) throws OrderException {
-		return new ResponseEntity<Orders>(oService.updateOrder(orderId, locations, payment_method), HttpStatus.OK);
+											  @PathVariable("payment_method") String payment_method,
+											  @PathVariable("orderStatus") String orderStatus) throws OrderException {
+		return new ResponseEntity<Orders>(oService.updateOrder(orderId, locations, payment_method, orderStatus), HttpStatus.OK);
 	}
 
 	@GetMapping("/view/{id}")

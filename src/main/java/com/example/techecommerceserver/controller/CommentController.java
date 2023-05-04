@@ -17,20 +17,20 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @Log4j2
-@RequestMapping("/{productId}")
+@RequestMapping("/comments")
 public class CommentController {
 
     @Autowired
     private CommentService cService;
 
 
-    @GetMapping("/viewComment")
-    public ResponseEntity<List<Comment>> viewProductByCategoryId(@PathVariable Integer productId)
+    @GetMapping("/viewComment/{productId}")
+    public ResponseEntity<List<Comment>> viewProductByCategoryId(@PathVariable String productId)
             throws CommentException {
-        return new ResponseEntity<List<Comment>>(cService.viewCommentbyProduct(productId), HttpStatus.OK);
+        return new ResponseEntity<List<Comment>>(cService.viewCommentbyProduct(Integer.parseInt(productId)), HttpStatus.OK);
     }
 
-    @PostMapping("/addComment")
+    @PostMapping("/addComment/{productId}")
     public ResponseEntity<Comment> addProduct(@RequestBody Comment c) throws CommentException {
         Comment comment = cService.addComment(c);
         return new ResponseEntity<Comment>(comment, HttpStatus.OK);

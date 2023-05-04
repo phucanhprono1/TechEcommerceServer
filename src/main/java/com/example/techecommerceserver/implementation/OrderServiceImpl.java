@@ -82,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
 		return savedOrder;
 	}
 	@Override
-	public Orders updateOrder(int id, String locations,String payment_method) throws OrderException {
+	public Orders updateOrder(int id, String locations,String payment_method, String orderStatus) throws OrderException {
 		Orders k = oRepo.findById(id).orElseThrow(() -> new OrderException("Order not found"));
 		//Optional<Customer> opt = customerRepo.findById(id);
 		/*java.util.Date now = new java.util.Date();
@@ -90,6 +90,7 @@ public class OrderServiceImpl implements OrderService {
 		k.setDate(LocalDateTime.now());
 		k.setLocation(locations);
 		k.setPaymentMethod(payment_method);
+		k.setOrderStatus(orderStatus);
 
 		return oRepo.save(k);
 
@@ -107,6 +108,7 @@ public class OrderServiceImpl implements OrderService {
 		a.setCustomer(o.getCustomer());
 		return a;*/
 	}
+
 	@Override
 	public Orders viewOrder(Integer orderId) throws OrderException {
 		Optional<Orders> o = oRepo.findById(orderId);

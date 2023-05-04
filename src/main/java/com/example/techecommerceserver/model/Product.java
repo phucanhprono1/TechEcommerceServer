@@ -33,6 +33,10 @@ public class Product {
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "product")
 	private List<Comment> commentList;
 
+	public Product(int productId) {
+		this.productId = productId;
+	}
+
 	public Product() {
 
 	}

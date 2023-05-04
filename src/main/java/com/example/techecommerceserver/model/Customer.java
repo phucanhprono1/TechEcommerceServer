@@ -45,5 +45,7 @@ public class Customer {
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")
 	private List<Orders> orders;
-
+	public Customer(int cId) {
+		this.cId = cId;
+	}
 }

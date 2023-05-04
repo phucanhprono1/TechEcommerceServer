@@ -7,12 +7,15 @@ import com.example.techecommerceserver.model.Cart;
 import com.example.techecommerceserver.repository.CartRepo;
 import com.example.techecommerceserver.repository.CustomerRepo;
 import com.example.techecommerceserver.service.CartService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
+@Log4j2
 @RequestMapping("/customer/cart")
 public class CartController {
 

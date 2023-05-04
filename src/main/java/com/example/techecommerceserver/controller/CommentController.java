@@ -25,9 +25,9 @@ public class CommentController {
 
 
     @GetMapping("/viewComment/{productId}")
-    public ResponseEntity<List<Comment>> viewProductByCategoryId(@PathVariable String productId)
+    public ResponseEntity<List<Comment>> viewProductByCategoryId(@PathVariable Integer productId)
             throws CommentException {
-        return new ResponseEntity<List<Comment>>(cService.viewCommentbyProduct(Integer.parseInt(productId)), HttpStatus.OK);
+        return new ResponseEntity<List<Comment>>(cService.viewCommentbyProduct(productId), HttpStatus.OK);
     }
 
     @PostMapping("/addComment/{productId}")

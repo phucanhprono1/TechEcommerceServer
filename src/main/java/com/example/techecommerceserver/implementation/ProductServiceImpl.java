@@ -121,5 +121,8 @@ public class ProductServiceImpl implements ProductService {
 		product.setCategory(cRepo.getOne(productDto.getCategoryId()));
 		return product;
 	}
-
+	@Override
+	public List<Product> viewEndProduct() throws ProductException {
+		return pRepo.topEndProduct();
+	}
 }

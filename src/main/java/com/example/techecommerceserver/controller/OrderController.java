@@ -1,6 +1,7 @@
 package com.example.techecommerceserver.controller;
 
 
+import com.example.techecommerceserver.dto.OrderPaypalReq;
 import com.example.techecommerceserver.dto.OrderRequest;
 import com.example.techecommerceserver.exception.CartException;
 import com.example.techecommerceserver.exception.CustomerException;
@@ -25,6 +26,11 @@ public class OrderController {
 
 	@Autowired
 	private OrderService oService;
+	@PostMapping("paypal/{customerId}")
+	public ResponseEntity<Orders> addOrderPaypal(@PathVariable("customerId") Integer customerId, @RequestBody OrderPaypalReq orderRequest)
+			throws OrderException, CustomerException, CartException {
+		return new ResponseEntity<Orders>(oService.addOrderPaypal(customerId,orderRequest), HttpStatus.CREATED);
+	}
 
 	@PostMapping("/add/{customerId}")
 	public ResponseEntity<Orders> addOrder(@PathVariable("customerId") Integer customerId, @RequestBody OrderRequest orderRequest)
@@ -32,12 +38,12 @@ public class OrderController {
 		return new ResponseEntity<Orders>(oService.addOrder(customerId,orderRequest), HttpStatus.CREATED);
 	}
 
-	@PutMapping("/update/{orderId}/{locations}/{payment_method}/{orderStatus}")
+	@PutMapping("/update/{orderId}/{payment_method}/{orderStatus}")
 	public ResponseEntity<Orders> updateOrder(@PathVariable("orderId") int orderId,
-											  @PathVariable("locations") String locations,
+
 											  @PathVariable("payment_method") String payment_method,
 											  @PathVariable("orderStatus") String orderStatus) throws OrderException {
-		return new ResponseEntity<Orders>(oService.updateOrder(orderId, locations, payment_method, orderStatus), HttpStatus.OK);
+		return new ResponseEntity<Orders>(oService.updateOrder(orderId, payment_method, orderStatus), HttpStatus.OK);
 	}
 
 	@GetMapping("/view/{id}")
@@ -71,5 +77,16 @@ public class OrderController {
 	public ResponseEntity<Orders> cancelOrder(@PathVariable("orderId") Integer orderId) {
 		return new ResponseEntity<Orders>(oService.cancelOrder(orderId), HttpStatus.OK);
 	}
-
+	@GetMapping("/count")
+	public  Long countOrders() throws OrderException {
+		return oService.countOrder();
+	}
+	@GetMapping("/viewNearOrder")
+	public ResponseEntity<List<Orders>> viewNearOrder() throws OrderException {
+		return new ResponseEntity<List<Orders>>(oService.viewNearOrder(), HttpStatus.OK);
+	}
+	@GetMapping("/chart")
+	public List<Object[]> createChart() throws OrderException{
+		return oService.createDataChart();
+	}
 }

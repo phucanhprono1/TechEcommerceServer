@@ -1,6 +1,7 @@
 package com.example.techecommerceserver.implementation;
 
 import com.example.techecommerceserver.dto.OrderDTO;
+import com.example.techecommerceserver.dto.OrderPaypalReq;
 import com.example.techecommerceserver.dto.OrderRequest;
 import com.example.techecommerceserver.exception.CartException;
 import com.example.techecommerceserver.exception.CustomerException;
@@ -38,6 +39,51 @@ public class OrderServiceImpl implements OrderService {
 	private ProductRepo productRepo;
 
 	@Override
+	public Orders addOrderPaypal(Integer cid, OrderPaypalReq orderRequest) throws OrderException, CustomerException, CartException {
+		Optional<Customer> opt = customerRepo.findById(cid);
+//		if (opt.isEmpty()) {
+//			throw new CustomerException("Customer not found");
+//		}
+//
+		Customer c = opt.get();
+		c.setAddress(orderRequest.getAddress());
+
+		addressRepo.save(c.getAddress());
+		Cart cart = c.getCart();
+
+		Orders order = new Orders();
+
+		order.setCustomer(c);
+		order.setDate(LocalDateTime.now());
+		order.setOrderStatus("Pending");
+		order.setPaymentStatus(orderRequest.getPaymentstatus());
+
+		order.setLocation(orderRequest.getLocation());
+//
+		order.setPaymentMethod("Paypal");
+		List<OrderItem> orderItems = new ArrayList<>();
+		for (CartItem cartItem : cart.getCartItems()) {
+			OrderItem orderItem = new OrderItem();
+			orderItem.setProduct(cartItem.getProduct());
+			orderItem.setQuantity(cartItem.getQuantity());
+			Product p = cartItem.getProduct();
+			p.setQuantity(p.getQuantity() - cartItem.getQuantity());
+			p.setNumberSell(p.getNumberSell() + cartItem.getQuantity());
+			productRepo.save(p);
+//			orderItem.setOrder(order);
+			orderItems.add(orderItem);
+			orderItemRepo.save(orderItem);
+		}
+		order.setOrderItems(orderItems);
+		order.setTotal_price(cart.getTotal_price());
+		Orders savedOrder = oRepo.save(order);
+		//xóa cart của customer sau khi order
+		cartService.removeAllProduct(c.getCId());
+
+		return savedOrder;
+	}
+
+	@Override
 	public Orders addOrder(Integer cid, OrderRequest orderRequest) throws OrderException, CustomerException, CartException {
 
 		Optional<Customer> opt = customerRepo.findById(cid);
@@ -56,7 +102,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setCustomer(c);
 		order.setDate(LocalDateTime.now());
 		order.setOrderStatus("Pending");
-
+		order.setPaymentStatus("Pending");
 		order.setLocation(orderRequest.getLocation());
 //
 		order.setPaymentMethod(orderRequest.getPaymentMethod());
@@ -82,13 +128,13 @@ public class OrderServiceImpl implements OrderService {
 		return savedOrder;
 	}
 	@Override
-	public Orders updateOrder(int id, String locations,String payment_method, String orderStatus) throws OrderException {
+	public Orders updateOrder(int id,String payment_method, String orderStatus) throws OrderException {
 		Orders k = oRepo.findById(id).orElseThrow(() -> new OrderException("Order not found"));
 		//Optional<Customer> opt = customerRepo.findById(id);
 		/*java.util.Date now = new java.util.Date();
 		Timestamp timestamp = new Timestamp(now.getTime());*/
 		k.setDate(LocalDateTime.now());
-		k.setLocation(locations);
+//		k.setLocation(locations);
 		k.setPaymentMethod(payment_method);
 		k.setOrderStatus(orderStatus);
 
@@ -230,4 +276,19 @@ public class OrderServiceImpl implements OrderService {
 		return oRepo.count();
 	}
 
+
+	@Override
+	public List<Orders> viewNearOrder() throws OrderException {
+		List<Orders> orders = oRepo.viewNearlyOrder();
+		if (orders.size() > 0) {
+			return orders;
+		} else {
+			throw new OrderException("Order not found");
+		}
+	}
+
+	@Override
+	public List<Object[]> createDataChart() throws OrderException {
+		return oRepo.dataChart();
+	}
 }

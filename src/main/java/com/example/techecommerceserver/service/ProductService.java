@@ -29,4 +29,5 @@ public interface ProductService {
 	List<Product> viewTopSell() throws IllegalArgumentException;
 
 	List<Product> search(String s) throws ProductException;
+	List<Product> viewEndProduct() throws ProductException;
 }

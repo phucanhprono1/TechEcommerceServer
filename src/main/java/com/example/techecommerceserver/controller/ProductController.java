@@ -71,5 +71,8 @@ public class ProductController {
 	public List<Product> searchProduct(@PathVariable String content) throws ProductException {
 		return pService.search(content);
 	}
-
+	@GetMapping("/topEndProduct")
+	public ResponseEntity<List<Product>> topEndProduct() throws ProductException {
+		return new ResponseEntity<List<Product>>(pService.viewEndProduct(), HttpStatus.OK);
+	}
 }

@@ -22,4 +22,6 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
             + "LOWER(p.size) LIKE LOWER(CONCAT('%', :keyword, '%'))"
     )
     List<Product> search(@Param("keyword") String keyword);
+    @Query("select p from Product p where p.quantity < 10 order by p.quantity asc")
+    List<Product> topEndProduct();
 }

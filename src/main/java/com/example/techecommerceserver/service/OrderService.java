@@ -1,6 +1,7 @@
 package com.example.techecommerceserver.service;
 
 
+import com.example.techecommerceserver.dto.OrderPaypalReq;
 import com.example.techecommerceserver.dto.OrderRequest;
 import com.example.techecommerceserver.exception.CartException;
 import com.example.techecommerceserver.exception.CustomerException;
@@ -11,10 +12,11 @@ import com.example.techecommerceserver.model.Orders;
 import java.util.List;
 
 public interface OrderService {
+	public Orders addOrderPaypal(Integer cid, OrderPaypalReq orderRequest) throws OrderException, CustomerException, CartException;
 
 	public Orders addOrder(Integer cid, OrderRequest orderRequest) throws OrderException, CustomerException, CartException;
 
-	public Orders updateOrder(int id, String locations,String payment_method, String orderStatus) throws OrderException;
+	public Orders updateOrder(int id,String payment_method, String orderStatus) throws OrderException;
 
 	public Orders viewOrder(Integer orderId) throws OrderException;
 
@@ -27,4 +29,8 @@ public interface OrderService {
 	public Orders cancelOrder(Integer orderId);
 
 	long countOrder() throws OrderException;
+
+	public List<Orders> viewNearOrder() throws OrderException;
+
+	List<Object[]> createDataChart() throws OrderException;
 }

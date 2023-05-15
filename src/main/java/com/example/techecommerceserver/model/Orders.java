@@ -23,6 +23,7 @@ public class Orders {
 	private float total_price;
 
 	private String paymentMethod;
+	private String paymentStatus;
 
 
 	@ManyToOne(cascade = CascadeType.ALL)

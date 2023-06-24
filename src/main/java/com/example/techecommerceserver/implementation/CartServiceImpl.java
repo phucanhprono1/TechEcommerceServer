@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CartServiceImpl implements CartService {
+public class  CartServiceImpl implements CartService {
 
 	@Autowired
 	private CartRepo cRepo;

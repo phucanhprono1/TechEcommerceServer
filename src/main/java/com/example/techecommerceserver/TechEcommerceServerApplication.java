@@ -20,17 +20,6 @@ public class TechEcommerceServerApplication {
 
         SpringApplication.run(TechEcommerceServerApplication.class, args);
 
-        try {
-            FileInputStream serviceAccount = new FileInputStream("./src/main/resources/serviceAccountKey.json");
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .build();
-
-            FirebaseApp.initializeApp(options);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
 
     }
 //    @Bean

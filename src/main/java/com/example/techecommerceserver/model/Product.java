@@ -13,8 +13,7 @@ import java.util.List;
 @Embeddable
 @Entity
 @AllArgsConstructor
-@RedisHash("Product")
-public class Product implements Serializable {
+public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

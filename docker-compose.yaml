@@ -1,0 +1,29 @@
+#version: '3'
+#services:
+#  mysql1:
+#    restart: always
+#    build:
+#        context: ./mysql1
+#        dockerfile: Dockerfile
+#    image: mysql:latest
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: techecommerce
+#    ports:
+#      - 3306:3306
+#    networks:
+#      - techecommerce-network
+#
+#  TechEcommerceServer:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    depends_on:
+#      - mysql
+#    ports:
+#      - 8888:8888
+#    networks:
+#      - techecommerce-network
+#
+#networks:
+#  techecommerce-network:

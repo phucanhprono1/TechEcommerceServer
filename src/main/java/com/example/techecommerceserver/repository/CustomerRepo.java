@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface CustomerRepo extends JpaRepository<Customer, Integer> {
 
-	@Query("select c.orders from Customer c where c.cId=?1")
+	@Query("select c.orders from Customer c where c.cId=:cId")
 	public List<Orders> getAllOrderByCid(Integer cId);
 
 	public Customer findByEmail(String email);

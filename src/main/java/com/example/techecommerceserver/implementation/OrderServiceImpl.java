@@ -205,8 +205,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Orders> viewAllOrdersByUserId(Integer uderId) throws OrderException {
-		List<Orders> orders = customerRepo.getAllOrderByCid(uderId);
+	public List<Orders> viewAllOrdersByUserId(Integer userId) throws OrderException {
+		List<Orders> orders = customerRepo.getAllOrderByCid(userId);
 		/*List<OrderDTO> orderDTOS = new ArrayList<>();*/
 		if (orders.size() > 0) {
 			/*for(Orders o: orders){

@@ -12,3 +12,7 @@ VOLUME /var/lib/rest_mysql
 EXPOSE 3306
 
 label image.name=$image_name
+
+#cd mysql_img
+#docker build -t techecommerce_mysql .
+#docker run -d -p 3300:3306 --name techecommerce_mysql techecommerce_mysql

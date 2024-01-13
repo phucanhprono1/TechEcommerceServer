@@ -12,6 +12,8 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="mysql" target="17" />
+      <module name="mysql.main" target="17" />
+      <module name="mysql.test" target="17" />
       <module name="mysql1" target="17" />
     </bytecodeTargetLevel>
   </component>
